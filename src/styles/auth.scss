@@ -117,4 +117,15 @@
       }
     }
   }
+  // findPassword
+  .findPasswordDesc {
+    p {
+      color: $gray;
+      font-size: $size2;
+      span {
+        text-decoration: underline;
+        color: #333333;
+      }
+    }
+  }
 }
