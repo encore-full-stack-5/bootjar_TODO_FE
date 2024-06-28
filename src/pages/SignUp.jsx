@@ -51,12 +51,13 @@ function SignUp() {
         return;
       }
       try {
-        const response = await axios.post('http://localhost:8080/users/signup', {
+        const response = await axios.post('http://34.121.86.244/users/signup', {
           email,
           password,
           nickname,
           isPublicScope,
         });
+        // debugger;
         console.log(response.data);
         alert("회원가입 성공!");
         navigate('/login');
