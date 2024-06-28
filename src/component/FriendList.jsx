@@ -1,5 +1,6 @@
 import React from 'react';
 import basicProfile from "../assets/images/basicProfile.svg";
+import {Link} from "react-router-dom";
 
 const FriendList = () => {
     return (
@@ -8,8 +9,10 @@ const FriendList = () => {
                 <p className="friendListTitle">내 친구</p>
                 <ul className="friendList">
                     <li className="friend">
-                        <img src={basicProfile} alt="프로필 사진"/>
-                        <p>정희석</p>
+                        <Link to='/todo?query=friend' state={{userId: 1}} >
+                            <img src={basicProfile} alt="프로필 사진"/>
+                            <p>정희석</p>
+                        </Link>
                     </li>
                     <li className="friend">
                         <img src={basicProfile} alt="프로필 사진"/>
