@@ -18,6 +18,7 @@ import axios from "axios";
 
 const FriendMain = () => {
     const userId = useLocation().state?.userId;
+    const userNickname = useLocation().state?.userNickname;
     const friend = new URLSearchParams(location.search).get("query") === "friend";
     const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear()+"-"+String(new Date().getMonth()+1).padStart(2, '0')+"-"+new Date().getDate());
     const [todos, setTodos] = useState([]);
@@ -33,7 +34,24 @@ const FriendMain = () => {
             console.log(response.data);
             console.log(selectedDate);
         } catch (error) {
-            alert(error.message);
+            setTodos([]);
+            alert(error.response.data.message);
+            console.log(error);
+        }
+    }
+    const fetchUserTodos = async () => {
+        try {
+            const response = await axios.get(`http://34.121.86.244/todos/users/${userId}?query=${selectedDate}`, {
+                headers: {
+                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6InRlc3RAbmF2ZXIuY29tIiwibmlja05hbWUiOiLquYDsoJXroKwifQ.9comIDy7SoJ7BWytQEXiAxnUTj55foSGlYT_nKgb6PQ"
+                }
+            });
+            setTodos(response.data.todos);
+            console.log(response.data);
+            console.log(selectedDate);
+        } catch (error) {
+            setTodos([]);
+            alert(error.response.data.message);
             console.log(error);
         }
     }
@@ -50,8 +68,9 @@ const FriendMain = () => {
         return acc;
     }, {});
     useEffect(() => {
-        fetchFriendTodos();
-    }, [selectedDate])
+        if(friend) fetchFriendTodos();
+        else  fetchUserTodos();
+    }, [selectedDate, userId])
     return (
         <>
             <div className="mainContainer">
@@ -96,7 +115,7 @@ const FriendMain = () => {
                         <div className="userProfile">
                             <div className="userInfo">
                                 <img src={basicProfile} alt={"프로필 사진"}/>
-                                <p className="nickname">burndo</p>
+                                <p className="nickname">{userNickname}</p>
                                 <p>TODO</p>
                                 <button className="request">친구 요청</button>
                             </div>
@@ -110,7 +129,7 @@ const FriendMain = () => {
                                     <p className="category"><img src={bottom} alt={""} />{category}</p>
                                     {groupedTodos[category].map(todo => (
                                         <li key={todo.todoId} className={`todo ${todo.todoDone ? 'done' : ''}`}>
-                                            <Checkbox id={`todo-${todo.todoId}`} check={todo.todoDone} />
+                                            <Checkbox id={`todo-${todo.todoId}`} check={todo.todoDone} disabled={true} />
                                             <p>{todo.todoTitle}</p>
                                             <img src={comment} alt="댓글" className="comment" />
                                             <button className="move"><img src={move} alt="이동" /></button>

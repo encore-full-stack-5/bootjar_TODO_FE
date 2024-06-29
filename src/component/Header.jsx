@@ -4,7 +4,6 @@ import logo from "../assets/images/logo.svg";
 import friendRequest from "../assets/images/friendRequest.svg";
 import { useNavigate } from "react-router-dom";
 import RequestFriendList from "./RequestFriendList.jsx";
-import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const navigate = useNavigate();
