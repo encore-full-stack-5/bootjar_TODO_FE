@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import "../styles/main.css";
 import Header from "../component/Header.jsx";
 import Checkbox from "../component/Checkbox.jsx";
-import { useLocation } from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 // img
 import basicProfile from "../assets/images/basicProfile.svg";
 import comment from "../assets/images/comment.svg";
@@ -129,17 +129,21 @@ const FriendMain = () => {
                                     <p className="category"><img src={bottom} alt={""} />{category}</p>
                                     {groupedTodos[category].map(todo => (
                                         <li key={todo.todoId} className={`todo ${todo.todoDone ? 'done' : ''}`}>
-                                            <Checkbox id={`todo-${todo.todoId}`} check={todo.todoDone} disabled={true} />
-                                            <p>{todo.todoTitle}</p>
-                                            <img src={comment} alt="댓글" className="comment" />
-                                            <button className="move"><img src={move} alt="이동" /></button>
+                                            <Checkbox id={`todo-${todo.todoId}`} check={todo.todoDone} disabled={true}/>
+                                            <p>
+                                                <Link to='/detail' state={{todoId: todo.todoId, disabled: false}}>
+                                                    {todo.todoTitle}
+                                                </Link>
+                                            </p>
+                                            <img src={comment} alt="댓글" className="comment"/>
+                                            <button className="move"><img src={move} alt="이동"/></button>
                                         </li>
                                     ))}
                                 </ul>
                             ))}
                             {todos.length === 0 && <p>할 일이 없습니다.</p>}
                         </div>
-                        <FriendList />
+                        <FriendList/>
                     </div>
                 </div>
             </div>

@@ -1,19 +1,55 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "../styles/todo.css";
 import Checkbox from "../component/Checkbox.jsx";
 // img
 import basicProfile from "../assets/images/basicProfile.svg";
 import deleteComment from "../assets/images/deleteComment.svg";
 import mdfComment from "../assets/images/mdfComment.svg";
+import {useLocation} from "react-router-dom";
+import axios from "axios";
 
 const Todo = () => {
+    const todoId = useLocation().state?.todoId;
+    const disabled = useLocation().state?.disabled;
+    const [todo, setTodo] = useState({
+        categoryId: 0,
+        todoTitle: "",
+        todoContent: "",
+        todoDate: "",
+        todoDone: false
+    });
+    const categories = {
+        1: '생활',
+        2: '운동',
+        3: '공부',
+        4: '기타'
+    };
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(`http://34.121.86.244/todos/${todoId}`, {
+                headers: {
+                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6InRlc3RAbmF2ZXIuY29tIiwibmlja05hbWUiOiLquYDsoJXroKwifQ.9comIDy7SoJ7BWytQEXiAxnUTj55foSGlYT_nKgb6PQ"
+                }
+            });
+            setTodo(response.data);
+            console.log(response.data);
+        } catch (error) {
+            alert(error.message);
+            console.log(error);
+        }
+    };
+
+    useEffect( () => {
+        fetchData();
+    }, [])
     return (
         <>
             <div className="modalContainer">
                 <span className="modalOverlay"></span>
                 <div className="modalWrap">
                     <div className="modalHeader">
-                        <p className="category">생활</p>
+                        <p className="category">{categories[todo.categoryId]}</p>
                         <button className="menu">
                         <div className="menuBtn">
                             <button>수정하기</button>
@@ -23,11 +59,11 @@ const Todo = () => {
                     </div>
                     <div className="modalBody">
                         <div className="todo">
-                            <Checkbox id={`1`} />
-                            <p className="todoTitle">방 청소하기</p>
-                            <p className="date">06/11</p>
+                            <Checkbox id={`1`} check={todo.todoDone} disabled={!disabled}/>
+                            <p className="todoTitle">{todo.todoTitle}</p>
+                            <p className="date">{todo.todoDate}</p>
                         </div>
-                        <p className="todoDesc">컴퓨터방, 침대방 꼼꼼히 청소하기</p>
+                        <p className="todoDesc">{todo.todoContent}</p>
                     </div>
                     <ul className="todoComment">
                         <li className="comment">
