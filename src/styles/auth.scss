@@ -115,6 +115,10 @@
         height: 12px;
         margin-left: 5px;
       }
+      &.sendingEmail {
+        background-color: #a8e1ac;
+        color: #00970b;
+      }
     }
     &.chng {
       button {

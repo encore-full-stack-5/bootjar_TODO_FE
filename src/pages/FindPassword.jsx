@@ -4,16 +4,19 @@ import Input from "../component/Input.jsx";
 // img
 import back from "../assets/images/back.svg";
 import send from "../assets/images/send.svg";
+import check from "../assets/images/checkGreen.svg";
 import axios from "axios";
 
 const FindPassword = () => {
 
     const [emailInpt, setEmailInpt] = useState();
+    const [isSending, setIsSending] = useState(false);
 
     const sendEmail = async () => {
-        debugger;
         const response = await axios.post("http://localhost:8080/users/qrcode/token", emailInpt);
         console.log(response);
+        // TODO : 서버에서 token 발급 후 front에서 URL 생성 후 다시 서버로 전달 (qrcode)
+        setIsSending(true);
     }
 
     const onChangeEmailInpt = (e) => {
@@ -34,8 +37,18 @@ const FindPassword = () => {
                     <div className="signUpBtn">
                         <button type="button" className="back"><img src={back} alt="뒤로가기"/>
                         </button>
-                        <button type="submit" className="signUp" onClick={sendEmail}>메일 보내기<img src={send} alt=""/>
-                        </button>
+                        {
+                            !isSending ?
+                                <button className="signUp" onClick={sendEmail}>
+                                    메일 보내기
+                                    <img src={send} alt=""/>
+                                </button>
+                                :
+                                <button className="signUp sendingEmail" onClick={sendEmail}>
+                                    메일을 보냈습니다
+                                    <img src={check} alt=""/>
+                                </button>
+                        }
                     </div>
                 </form>
             </div>
