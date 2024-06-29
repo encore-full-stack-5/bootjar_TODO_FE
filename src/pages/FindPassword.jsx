@@ -3,7 +3,7 @@ import '../styles/auth.css';
 import Input from "../component/Input.jsx";
 // img
 import back from "../assets/images/back.svg";
-import check from "../assets/images/check.svg";
+import send from "../assets/images/send.svg";
 import axios from "axios";
 
 const FindPassword = () => {
@@ -34,7 +34,7 @@ const FindPassword = () => {
                     <div className="signUpBtn">
                         <button type="button" className="back"><img src={back} alt="뒤로가기"/>
                         </button>
-                        <button type="submit" className="signUp" onClick={sendEmail}>메일 보내기<img src={check} alt=""/>
+                        <button type="submit" className="signUp" onClick={sendEmail}>메일 보내기<img src={send} alt=""/>
                         </button>
                     </div>
                 </form>

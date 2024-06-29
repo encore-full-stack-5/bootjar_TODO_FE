@@ -53,15 +53,29 @@ select {
   padding-right: 20px;
   outline-color: #F470A4;
 }
-input:read-only, input:disabled,
-select:read-only,
+
 select:disabled {
   background-color: #F8F8F8;
   pointer-events: none;
 }
 
-input::placeholder {
+input::placeholder,
+textarea::placeholder {
   color: #AAAAAA;
+}
+input:read-only,
+textarea:read-only {
+  background-color: #F8F8F8;
+  pointer-events: none;
+}
+
+textarea {
+  border-radius: 20px;
+  border: 1px solid #DDDDDD;
+  padding: 20px;
+  outline-color: #F470A4;
+  resize: none;
+  width: 100%;
 }
 
 input[type=checkbox] {
