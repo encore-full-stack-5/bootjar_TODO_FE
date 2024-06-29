@@ -160,6 +160,15 @@
           }
         }
       }
+      .noneComment {
+        margin: {
+          top: 20px;
+          bottom: 20px;
+        }
+        text-align: center;
+        color: $gray;
+        font-size: $size2;
+      }
     }
     .postComment {
       width: 100%;
