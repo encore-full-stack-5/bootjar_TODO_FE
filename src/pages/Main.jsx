@@ -23,6 +23,7 @@ const Main = () => {
     const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear()+"-"+String(new Date().getMonth()+1).padStart(2, '0')+"-"+new Date().getDate());
     const [todos, setTodos] = useState([]);
     const [nickname, setNickname] = useState('');
+    const [image, setImage] = useState('');
     const navigate = useNavigate();
 
     const handlMyInfoClick = () => {
@@ -43,9 +44,9 @@ const Main = () => {
                 }
             });
 
-            const { nickname } = response.data;
+            const { nickname ,image} = response.data;
             setNickname(nickname);
-
+            setImage(image)
         } catch (error) {
             alert(error.message);
             console.log(error);
@@ -126,7 +127,7 @@ const Main = () => {
                     <div className="todoContainer">
                         <div className="userProfile">
                             <div className="userInfo">
-                                <img src={basicProfile} alt={"프로필 사진"}/>
+                                <img src={image || basicProfile} alt={"프로필 사진"}/>
                                 <p className="nickname">{nickname}</p>
                                 <p>TODO</p>
                             </div>
