@@ -19,19 +19,18 @@ const MyPageForm = () => {
         nickname: '',
         userPublicScope: true,
         image: '',
-      });
+    });
 
     const [profileImg, setProfileImg] = useState(basicProfile);
     const [userInfo, setUserInfo] = useState({ email: '', nickname: '', password: '', userPublicScope: false, image: '' });
     const [showPasswordFields, setShowPasswordFields] = useState(false);
-
 
     const onChangeProfileImg = (e) => {
         const file = e.target.files[0];
         const reader = new FileReader();
 
         reader.onloadend = () => {
-            setProfileImg(file);
+            setProfileImg(reader.result); // base64 인코딩된 URL로 설정
             setUserInfo({ ...userInfo, image: file });
         };
 
@@ -41,37 +40,37 @@ const MyPageForm = () => {
     };
 
     const token = localStorage.getItem('token');
-    
+
     useEffect(() => {
         fetchMyInfo();
     }, []);
-    
-    //회원 정보 get
+
+    // 회원 정보 get
     const fetchMyInfo = async () => {
         try {
-          const response = await axios.get(`http://34.121.86.244/users/me`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-      
-          const { email, userPublicScope, image, nickname } = response.data;
-          setUserInfo({ email, userPublicScope, image, nickname, password: '' });
-          setFetchedUserInfo({ userPublicScope, image, nickname, password: '' });
-          if (image) {
-            setProfileImg(image);
-          }
-          
-        } catch (error) {
-          alert(error.message);
-          console.log(error);
-        }
-      };
+            const response = await axios.get(`http://34.121.86.244/users/me`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
 
-      const handlePublicScopeChange = () => {
+            const { email, userPublicScope, image, nickname } = response.data;
+            setUserInfo({ email, userPublicScope, image, nickname, password: '' });
+            setFetchedUserInfo({ userPublicScope, image, nickname, password: '' });
+            if (image) {
+                setProfileImg(image);
+            }
+
+        } catch (error) {
+            alert(error.message);
+            console.log(error);
+        }
+    };
+
+    const handlePublicScopeChange = () => {
         setUserInfo({ ...userInfo, userPublicScope: !userInfo.userPublicScope });
-      };
-      
+    };
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setUserInfo({ ...userInfo, [name]: value });
@@ -81,53 +80,50 @@ const MyPageForm = () => {
         navigate('/mypage');
     };
 
-    //회원정보 수정
-
+    // 회원정보 수정
     const handleSaveClick = async () => {
         try {
-          const updatedData = new FormData();
-          let hasUpdatedData = false;
-      
-          if (fetchedUserInfo.nickname !== userInfo.nickname) {
-            updatedData.append('nickname', userInfo.nickname);
-            hasUpdatedData = true;
-          }
-      
-          if (fetchedUserInfo.image !== userInfo.image) {
-            updatedData.append('image', userInfo.image);
-            hasUpdatedData = true;
-          }
-      
-          if (userInfo.password) {
-            updatedData.append('password', userInfo.password);
-            hasUpdatedData = true;
-          }
-      
-          if (fetchedUserInfo.userPublicScope !== userInfo.userPublicScope) {
-            updatedData.append('userPublicScope', userInfo.userPublicScope);
-            hasUpdatedData = true;
-          }
-      
-          if (hasUpdatedData) {
-            await axios.put(`http://34.121.86.244/users/me`, updatedData, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'multipart/form-data',
-              },
-            });
-            alert('수정완료.');
-            navigate('/mypage');
-          } else {
-            alert('변경된 사항이 없습니다.');
-          }
+            const updatedData = new FormData();
+            let hasUpdatedData = false;
+
+            if (fetchedUserInfo.nickname !== userInfo.nickname) {
+                updatedData.append('nickname', userInfo.nickname);
+                hasUpdatedData = true;
+            }
+
+            if (fetchedUserInfo.image !== userInfo.image) {
+                updatedData.append('image', userInfo.image);
+                hasUpdatedData = true;
+            }
+
+            if (userInfo.password) {
+                updatedData.append('password', userInfo.password);
+                hasUpdatedData = true;
+            }
+
+            if (fetchedUserInfo.userPublicScope !== userInfo.userPublicScope) {
+                updatedData.append('userPublicScope', userInfo.userPublicScope);
+                hasUpdatedData = true;
+            }
+
+            if (hasUpdatedData) {
+                await axios.put(`http://34.121.86.244/users/me`, updatedData, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+                alert('수정완료.');
+                navigate('/mypage');
+            } else {
+                alert('변경된 사항이 없습니다.');
+            }
         } catch (error) {
-          debugger;
-          alert(error.message || error.response.data);
-          console.log(error);
+            debugger;
+            alert(error.message || error.response.data);
+            console.log(error);
         }
-      };
-      
-      
+    };
 
     const togglePasswordFields = () => {
         setShowPasswordFields(!showPasswordFields);
@@ -180,4 +176,3 @@ const MyPageForm = () => {
 };
 
 export default MyPageForm;
-
