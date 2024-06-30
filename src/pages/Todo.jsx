@@ -5,15 +5,17 @@ import Checkbox from "../component/Checkbox.jsx";
 import basicProfile from "../assets/images/basicProfile.svg";
 import deleteComment from "../assets/images/deleteComment.svg";
 import mdfComment from "../assets/images/mdfComment.svg";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
+import {categories} from "../config_f/categories.js";
 import error from "eslint-plugin-react/lib/util/error.js";
 import Date from "../component/Date.jsx";
 
 const Todo = () => {
     // token
+    const token = localStorage.getItem('token');
     const getToken = `Bearer ${localStorage.token}`;
-
+    const navigate = useNavigate();
     const todoId = useLocation().state?.todoId;
     const disabled = useLocation().state?.disabled;
     const [todo, setTodo] = useState({
@@ -23,11 +25,26 @@ const Todo = () => {
         todoDate: "",
         todoDone: false
     });
-    const categories = {
-        1: '생활',
-        2: '운동',
-        3: '공부',
-        4: '기타'
+
+    const handleEdit = () => {
+        navigate(`/todos/${todoId}/edit`, {
+            state: {
+                todo : todo
+            }
+        });
+    };
+    const handleDelete = async () => {
+        try {
+            const response = await axios.delete(`http://34.121.86.244/todos/${todoId}`, {
+                headers: {
+                    Authorization: getToken
+                }
+            });
+            alert(response.data.message);
+            navigate(`/home`)
+        } catch (error) {
+            console.log(error);
+        }
     };
     // comment
     const [comments, setComments] = useState([]);
@@ -162,8 +179,8 @@ const Todo = () => {
                         <p className="category">{categories[todo.categoryId]}</p>
                         <button className="menu">
                         <div className="menuBtn">
-                            <button>수정하기</button>
-                            <button>삭제하기</button>
+                            <button onClick={handleEdit}>수정하기</button>
+                            <button onClick={handleDelete}>삭제하기</button>
                         </div>
                     </button>
                     </div>
