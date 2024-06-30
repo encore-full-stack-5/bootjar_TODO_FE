@@ -15,6 +15,7 @@ import commentCount from "../assets/images/commentCount.svg";
 import Calendar from "../component/Calendar.jsx";
 import FriendList from "../component/FriendList.jsx";
 import axios from "axios";
+import {sendFriendRequest} from "../api_f/friend.js";
 
 const FriendMain = () => {
     const userId = useLocation().state?.userId;
@@ -22,6 +23,17 @@ const FriendMain = () => {
     const friend = new URLSearchParams(location.search).get("query") === "friend";
     const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear()+"-"+String(new Date().getMonth()+1).padStart(2, '0')+"-"+new Date().getDate());
     const [todos, setTodos] = useState([]);
+
+    const sendRequest = async (receiverId) => {
+        try {
+            const res = await sendFriendRequest(receiverId);
+            if (res.status === 200) {
+                alert("요청을 보냈습니다!")
+            }
+        } catch (error) {
+            alert("이미 친구이거나 처리된 요청입니다!")
+        }
+    };
 
     const fetchFriendTodos = async () => {
         try {
@@ -117,7 +129,7 @@ const FriendMain = () => {
                                 <img src={basicProfile} alt={"프로필 사진"}/>
                                 <p className="nickname">{userNickname}</p>
                                 <p>TODO</p>
-                                <button className="request">친구 요청</button>
+                                <button className="request" onClick={() => sendRequest(userId)}>친구 요청</button>
                             </div>
                             <div className="delete">
                                 <button><img src={deleteFriend} alt={""} /></button>
