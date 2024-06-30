@@ -8,6 +8,7 @@ import Todo from "./pages/Todo.jsx";
 import Search from "./pages/Search.jsx";
 import MyPage from './pages/MyPage.jsx';
 import MyPageForm from './pages/MyPageForm.jsx';
+import TodoForm from "./pages/TodoForm.jsx";
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/home" element={<Main />}></Route>
           <Route path="/mypage" element={<MyPage />}></Route>
           <Route path="/edit-profile" element={<MyPageForm />}></Route>
+          <Route path="/todos/new" element={<TodoForm />}></Route>
           {/*<Route path="/product/*" element={<Product />}></Route>*/}
           {/*<Route path="*" element={<NotFound />}></Route>*/}
         </Routes>
