@@ -7,13 +7,16 @@
   .myPageWrap {
     text-align: center;
     width: 300px;
-    height: calc(100vh - 130px);
+    //height: calc(100vh - 130px);
+    height: 100%;
     @include flexCenter;
     flex-direction: column;
     margin: 0 auto;
     .profileImg {
       width: 200px;
       margin-top: 50px;
+      border-radius: 70px;
+      border: 1px solid $buttonGray3;
     }
     .nickname {
       font: {
@@ -76,8 +79,13 @@
       display: flex;
       .profileImgForm {
         position: relative;
-        img {
+        > img {
           width: 200px;
+          border: 1px solid $buttonGray3;
+          border-radius: 70px;
+        }
+        input[type=file] {
+          display: none;
         }
         .chngImg {
           position: absolute;
@@ -89,9 +97,10 @@
           border-radius: 50%;
           box-shadow: 0 2px 4px 0 rgba(0 0 0 / 25%);
           @include flexCenter;
-          &::after {
-            content: url("../assets/images/modifyImg.svg");
-            padding-top: 5px;
+          cursor: pointer;
+          img {
+            width: 20px;
+            padding-left: 2px;
           }
         }
       }

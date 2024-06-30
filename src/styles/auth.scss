@@ -116,5 +116,22 @@
         margin-left: 5px;
       }
     }
+    &.chng {
+      button {
+        width: 100%;
+      }
+    }
+  }
+  // findPassword
+  .findPasswordDesc {
+    margin-top: 10px;
+    p {
+      color: $gray;
+      font-size: $size2;
+      span {
+        text-decoration: underline;
+        color: #333333;
+      }
+    }
   }
 }

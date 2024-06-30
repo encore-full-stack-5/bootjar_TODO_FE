@@ -15,11 +15,43 @@ import commentCount from "../assets/images/commentCount.svg";
 import Calendar from "../component/Calendar.jsx";
 import FriendList from "../component/FriendList.jsx";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 import {Link} from "react-router-dom";
+
 
 const Main = () => {
     const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear()+"-"+String(new Date().getMonth()+1).padStart(2, '0')+"-"+new Date().getDate());
     const [todos, setTodos] = useState([]);
+    const [nickname, setNickname] = useState('');
+    const navigate = useNavigate();
+
+    const handlMyInfoClick = () => {
+        navigate('/mypage');
+     };
+
+     useEffect(() => {
+        fetchMyInfo();
+    }, []);
+
+    const token = localStorage.getItem('token');
+
+    const fetchMyInfo = async () => {
+        try {
+            const response = await axios.get(`http://34.121.86.244/users/me`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            const { nickname } = response.data;
+            setNickname(nickname);
+
+        } catch (error) {
+            alert(error.message);
+            console.log(error);
+        }
+    };
+
 
     const fetchTodos = async () => {
         try {
@@ -95,11 +127,11 @@ const Main = () => {
                         <div className="userProfile">
                             <div className="userInfo">
                                 <img src={basicProfile} alt={"프로필 사진"}/>
-                                <p className="nickname">rnirarn</p>
+                                <p className="nickname">{nickname}</p>
                                 <p>TODO</p>
                             </div>
                             <div className="userSetting">
-                                <button>내 정보<img src={setting} alt={""} /></button>
+                                <button onClick={handlMyInfoClick}>내 정보<img src={setting} alt={""} /></button>
                             </div>
                         </div>
                         <div className="todoWrap">

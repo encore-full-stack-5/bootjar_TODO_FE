@@ -48,16 +48,30 @@ select {
     right: 20px;
   }
   outline-color: $main;
-  &:read-only,
+}
+select {
   &:disabled {
     background-color: $buttonGray1;
     pointer-events: none;
   }
 }
-input {
+input,
+textarea {
   &::placeholder {
     color: $gray;
   }
+  &:read-only {
+    background-color: $buttonGray1;
+    pointer-events: none;
+  }
+}
+textarea {
+  border-radius: $radius;
+  border: 1px solid $border;
+  padding: 20px;
+  outline-color: $main;
+  resize: none;
+  width: 100%;
 }
 input[type="checkbox"]{
   display: none;

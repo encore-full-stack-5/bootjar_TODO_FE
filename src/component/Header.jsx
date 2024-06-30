@@ -11,6 +11,7 @@ const Header = () => {
     const logout = () => {
         localStorage.removeItem('token');
         navigate('/login');
+    };
 
     const [searchValue, setSearchValue] = useState('');
     const [isOpen, setIsOpen] = useState(false);
@@ -55,8 +56,7 @@ const Header = () => {
                 </div>
             </div>
         </>
-        );
-    }
+    );
 }
 
 export default Header;
