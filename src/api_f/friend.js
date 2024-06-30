@@ -15,6 +15,11 @@ export const getRequests = async (data) => {
     return res;
 };
 
+export const sendFriendRequest = async (data) => {
+    const res = await api("/friends/requests/"+data, "post");
+    return res;
+};
+
 export const respondToRequests = async (data) => {
     const res = await api("/friends/requests/"+data.requestId+"?status="+data.acceptRequest, "delete", data);
     return res;
