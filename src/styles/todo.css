@@ -9,7 +9,9 @@
 .modalContainer {
   width: 100vw;
   height: 100vh;
-  position: relative;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 .modalContainer .modalOverlay {
   position: absolute;
@@ -28,6 +30,20 @@
   padding: 30px;
   background-color: #FFFFFF;
   border-radius: 30px;
+}
+.modalContainer .modalWrap .modalClose {
+  position: absolute;
+  left: 620px;
+  background-color: #FFFFFF;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+.modalContainer .modalWrap .modalClose img {
+  width: 15px;
 }
 .modalContainer .modalWrap .modalHeader {
   width: 100%;
@@ -92,6 +108,7 @@
 }
 .modalContainer .modalWrap .modalBody .todo .inptForm:last-child {
   width: 150px;
+  justify-content: center;
 }
 .modalContainer .modalWrap .modalBody .todo .todoTitle {
   margin-left: 10px;

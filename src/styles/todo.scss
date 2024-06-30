@@ -3,7 +3,9 @@
 .modalContainer {
   width: 100vw;
   height: 100vh;
-  position: relative;
+  position: absolute;
+  left: 0;
+  top: 0;
   .modalOverlay {
     position: absolute;
     width: 100%;
@@ -18,6 +20,18 @@
     padding: 30px;
     background-color: #FFFFFF;
     border-radius: 30px;
+    .modalClose {
+      position: absolute;
+      left: 620px;
+      background-color: #FFFFFF;
+      width: 40px;
+      height: 40px;
+      @include flexCenter;
+      border-radius: 10px;
+      img {
+        width: 15px;
+      }
+    }
     .modalHeader {
       width: 100%;
       @include flexJustifyBetween;
@@ -79,6 +93,7 @@
           }
           &:last-child {
             width: 150px;
+            justify-content: center;
           }
         }
         .todoTitle {
