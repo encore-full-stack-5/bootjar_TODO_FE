@@ -12,7 +12,6 @@ const Search = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [users, setUsers] = useState([]);
     const [searchError, setSearchError] = useState(false);
-    const token = 'your-auth-token'; // Replace with your actual token
 
     useEffect(() => {
         const query = new URLSearchParams(location.search);

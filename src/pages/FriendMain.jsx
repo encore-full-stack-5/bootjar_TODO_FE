@@ -15,6 +15,7 @@ import commentCount from "../assets/images/commentCount.svg";
 import Calendar from "../component/Calendar.jsx";
 import FriendList from "../component/FriendList.jsx";
 import axios from "axios";
+import {sendFriendRequest} from "../api_f/friend.js";
 import {categories} from "../config_f/categories.js";
 
 const FriendMain = () => {
@@ -25,6 +26,17 @@ const FriendMain = () => {
     const [todos, setTodos] = useState([]);
     const token = localStorage.getItem('token');
 
+
+    const sendRequest = async (receiverId) => {
+        try {
+            const res = await sendFriendRequest(receiverId);
+            if (res.status === 200) {
+                alert("요청을 보냈습니다!")
+            }
+        } catch (error) {
+            alert("이미 친구이거나 처리된 요청입니다!")
+        }
+    };
 
     const fetchFriendTodos = async () => {
         try {
@@ -114,7 +126,7 @@ const FriendMain = () => {
                                 <img src={basicProfile} alt={"프로필 사진"}/>
                                 <p className="nickname">{userNickname}</p>
                                 <p>TODO</p>
-                                <button className="request">친구 요청</button>
+                                <button className="request" onClick={() => sendRequest(userId)}>친구 요청</button>
                             </div>
                             <div className="delete">
                                 <button><img src={deleteFriend} alt={""} /></button>

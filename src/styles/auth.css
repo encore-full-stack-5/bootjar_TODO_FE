@@ -82,6 +82,22 @@
   margin-left: 5px;
   line-height: 0;
 }
+.authContainer .loginForm .findPasswordBtn {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #E9EAEE;
+}
+.authContainer .loginForm .findPasswordBtn button {
+  width: 100%;
+  background-color: #F8F8F8;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 10px;
+}
+.authContainer .loginForm .findPasswordBtn button:hover {
+  background-color: #F0F0F0;
+}
 .authContainer .signUpForm {
   width: 340px;
   margin-top: 5.2083333333%;
@@ -131,11 +147,12 @@
   height: 12px;
   margin-left: 5px;
 }
+.authContainer .signUpBtn .signUp.sendingEmail {
+  background-color: #a8e1ac;
+  color: #00970b;
+}
 .authContainer .signUpBtn.chng button {
   width: 100%;
-}
-.authContainer .findPasswordDesc {
-  margin-top: 10px;
 }
 .authContainer .findPasswordDesc p {
   color: #AAAAAA;

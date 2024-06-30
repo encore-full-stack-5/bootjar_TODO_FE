@@ -69,6 +69,24 @@
         }
       }
     }
+    .findPasswordBtn {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid $buttonGray3;
+      button {
+        width: 100%;
+        background-color: $buttonGray1;
+        text-align: center;
+        padding: {
+          top: 5px;
+          bottom: 5px;
+        }
+        border-radius: 10px;
+        &:hover {
+          background-color: $buttonGray2;
+        }
+      }
+    }
   }
 
   // SignUp
@@ -115,6 +133,10 @@
         height: 12px;
         margin-left: 5px;
       }
+      &.sendingEmail {
+        background-color: #a8e1ac;
+        color: #00970b;
+      }
     }
     &.chng {
       button {
@@ -124,7 +146,6 @@
   }
   // findPassword
   .findPasswordDesc {
-    margin-top: 10px;
     p {
       color: $gray;
       font-size: $size2;
