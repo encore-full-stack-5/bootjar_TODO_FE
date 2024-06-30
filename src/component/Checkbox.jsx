@@ -8,5 +8,4 @@ const Checkbox = ({id, check = false, disabled = false, clickHandler}) => {
         </>
     )
 }
-
 export default Checkbox;
