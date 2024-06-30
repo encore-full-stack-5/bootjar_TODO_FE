@@ -157,4 +157,9 @@ li {
   list-style: none;
 }
 
+a {
+  color: #000000;
+  text-decoration: none;
+}
+
 /*# sourceMappingURL=globals.css.map */

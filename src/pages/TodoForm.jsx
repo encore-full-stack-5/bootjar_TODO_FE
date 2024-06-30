@@ -9,10 +9,12 @@ import {categories} from "../config_f/categories.js";
 import axios from "axios";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 
-const TodoForm = () => {
-    const { id } = useParams();
-    const isEditMode = !!id;
-    const todoData = useLocation().state?.todo;
+const TodoForm = (props) => {
+
+    const { onClickTodoNewShowModal, onClickTodoSave, onClickUpdateSave, handleEdit, todoId, todo } = props;
+
+    const isEditMode = !!todoId;
+    const todoData = todo;
     const [formData, setFormData] = useState({
         categoryId: 1,
         todoTitle: '',
@@ -21,7 +23,6 @@ const TodoForm = () => {
     });
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
-
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -36,15 +37,15 @@ const TodoForm = () => {
         if (isEditMode) {
             try {
                 console.log(formData);
-                const response = await axios.put(`http://34.121.86.244/todos/${id}`,
+                const response = await axios.put(`http://34.121.86.244/todos/${todoId}`,
                     formData, {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }
                     });
                 console.log('Todo updated:', response.data);
-                alert(response.data.message)
-                navigate('/home');
+                alert(response.data.message);
+                onClickUpdateSave();
             } catch (error) {
                 console.error('Error updating todo:', error);
                 alert("수정 실패")
@@ -60,16 +61,16 @@ const TodoForm = () => {
                     });
                 console.log('Todo created:', response.data);
                 alert(response.data.message)
-                navigate('/home');
+                onClickTodoSave();
             } catch (error) {
                 console.error('Error creating todo:', error);
                 alert("생성 실패")
             }
         }
     };
-    const handleCancel = () => {
-        navigate('/home'); // 취소 버튼 클릭 시 홈으로 이동
-    };
+    // const handleCancel = () => {
+    //     navigate('/home'); // 취소 버튼 클릭 시 홈으로 이동
+    // };
 
     useEffect(() => {
         if (isEditMode) {
@@ -122,7 +123,7 @@ const TodoForm = () => {
                         ></textarea>
                     </div>
                     <div className="todoFormBtn">
-                        <button type="button" onClick={handleCancel}>취소</button>
+                        <button type="button" onClick={onClickTodoNewShowModal || handleEdit}>취소</button>
                         <button type="submit" onClick={handleSubmit}>{isEditMode? "수정" : "생성"}</button>
                     </div>
                 </div>

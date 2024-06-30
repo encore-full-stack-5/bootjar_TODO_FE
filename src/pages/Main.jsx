@@ -18,22 +18,30 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import {Link} from "react-router-dom";
 import {categories} from "../config_f/categories.js";
+import Todo from "./Todo.jsx";
+import todo from "./Todo.jsx";
+import TodoForm from "./TodoForm.jsx";
 
 
 const Main = () => {
+    const navigate = useNavigate();
+
     const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear()+"-"+String(new Date().getMonth()+1).padStart(2, '0')+"-"+new Date().getDate());
     const [todos, setTodos] = useState([]);
     const [nickname, setNickname] = useState('');
     const [image, setImage] = useState('');
-    const navigate = useNavigate();
+    // todo
+    const [showTodoModal, setShowTodoModal] = useState(false);
+    const [showTodoNewModal, setShowTodoNewModal] = useState(false);
+    const [todoId, setTodoId] = useState('');
 
     const handlMyInfoClick = () => {
         navigate('/mypage');
      };
 
-    const handleAddTODO = () => {
-        navigate('/todos/new')
-    }
+    // const handleAddTODO = () => {
+    //     navigate('/todos/new')
+    // }
 
      useEffect(() => {
         fetchMyInfo();
@@ -94,6 +102,25 @@ const Main = () => {
         acc[category].push(todo);
         return acc;
     }, {});
+
+    // modal
+    const onClickTodoShowModal = (todoId) => {
+        setShowTodoModal(!showTodoModal);
+        setTodoId(todoId);
+        fetchTodos();
+    }
+    const onClickTodoNewShowModal = () => {
+        setShowTodoNewModal(!showTodoNewModal);
+    }
+    const onClickTodoSave = () => {
+        setShowTodoNewModal(false);
+        fetchTodos();
+    }
+    const onClickTodoDelete = () => {
+        setShowTodoModal(false);
+        fetchTodos();
+    }
+
     useEffect(() => {
         fetchTodos();
     }, [selectedDate])
@@ -107,35 +134,35 @@ const Main = () => {
                         <div className="calendar">
                             <Calendar setDate={setSelectedDate} />
                         </div>
-                        <div className="monthRecord">
-                            <div className="record">
-                                <span className="icon">
-                                    <img src={done} alt={"완료"}/>
-                                </span>
-                                <div className="recordText">
-                                    <p>완료</p>
-                                    <p className="count">97</p>
-                                </div>
-                            </div>
-                            <div className="record">
-                                <span className="icon">
-                                    <img src={notDone} alt={"미완료"}/>
-                                </span>
-                                <div className="recordText">
-                                    <p>미완료</p>
-                                    <p className="count">2</p>
-                                </div>
-                            </div>
-                            <div className="record">
-                                <span className="icon commentIcon">
-                                    <img src={commentCount} alt={"댓글"}/>
-                                </span>
-                                <div className="recordText">
-                                    <p>댓글</p>
-                                    <p className="count">17</p>
-                                </div>
-                            </div>
-                        </div>
+                        {/*/!*<div className="monthRecord">*/}
+                        {/*    <div className="record">*/}
+                        {/*        <span className="icon">*/}
+                        {/*            <img src={done} alt={"완료"}/>*/}
+                        {/*        </span>*/}
+                        {/*        <div className="recordText">*/}
+                        {/*            <p>완료</p>*/}
+                        {/*            <p className="count">97</p>*/}
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*    <div className="record">*/}
+                        {/*        <span className="icon">*/}
+                        {/*            <img src={notDone} alt={"미완료"}/>*/}
+                        {/*        </span>*/}
+                        {/*        <div className="recordText">*/}
+                        {/*            <p>미완료</p>*/}
+                        {/*            <p className="count">2</p>*/}
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*    <div className="record">*/}
+                        {/*        <span className="icon commentIcon">*/}
+                        {/*            <img src={commentCount} alt={"댓글"}/>*/}
+                        {/*        </span>*/}
+                        {/*        <div className="recordText">*/}
+                        {/*            <p>댓글</p>*/}
+                        {/*            <p className="count">17</p>*/}
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*</div>*!/*/}
                     </div>
                     <div className="todoContainer">
                         <div className="userProfile">
@@ -143,7 +170,7 @@ const Main = () => {
                                 <img src={image || basicProfile} alt={"프로필 사진"}/>
                                 <p className="nickname">{nickname}</p>
                                 <p>TODO</p>
-                                <button className="request" onClick={handleAddTODO}>TODO 추가</button>
+                                <button className="request" onClick={onClickTodoNewShowModal}>TODO 추가</button>
                             </div>
                             <div className="userSetting">
                                 <button onClick={handlMyInfoClick}>내 정보<img src={setting} alt={""} /></button>
@@ -156,23 +183,25 @@ const Main = () => {
                                     {groupedTodos[category].map(todo => (
                                         <li key={todo.todoId} className={`todo ${todo.todoDone ? 'done' : ''}`}>
                                             <Checkbox id={`todo-${todo.todoId}`} check={todo.todoDone} clickHandler={()=>updateDone(todo.todoId)} />
-                                            <p>
-                                                <Link to='/detail' state={{todoId: todo.todoId, disabled: true}}>
+                                            <p onClick={() => onClickTodoShowModal(todo.todoId)}>
+                                                {/*<Link to='/detail' state={{todoId: todo.todoId, disabled: true}}>*/}
                                                     {todo.todoTitle}
-                                                </Link>
+                                                {/*</Link>*/}
                                             </p>
                                             <img src={comment} alt="댓글" className="comment" />
-                                            <button className="move"><img src={move} alt="이동" /></button>
+                                            {/*<button className="move"><img src={move} alt="이동" /></button>*/}
                                         </li>
                                     ))}
                                 </ul>
                             ))}
-                            {todos.length === 0 && <p>할 일이 없습니다.</p>}
+                            {todos.length === 0 && <p className="noneTodo">할 일이 없습니다.</p>}
                         </div>
                         <FriendList />
                     </div>
                 </div>
             </div>
+            { showTodoModal && <Todo onClickTodoShowModal={onClickTodoShowModal} onClickTodoDelete={onClickTodoDelete} todoId={todoId} disabled={true} /> }
+            { showTodoNewModal && <TodoForm onClickTodoNewShowModal={onClickTodoNewShowModal} onClickTodoSave={onClickTodoSave} /> }
         </>
     )
 }

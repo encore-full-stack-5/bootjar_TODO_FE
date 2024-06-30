@@ -5,20 +5,21 @@ import Checkbox from "../component/Checkbox.jsx";
 import basicProfile from "../assets/images/basicProfile.svg";
 import deleteComment from "../assets/images/deleteComment.svg";
 import mdfComment from "../assets/images/mdfComment.svg";
-import {useLocation, useNavigate} from "react-router-dom";
+import close from "../assets/images/delete.svg";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {categories} from "../config_f/categories.js";
-import error from "eslint-plugin-react/lib/util/error.js";
 import Date from "../component/Date.jsx";
+import TodoForm from "./TodoForm.jsx";
 
-const Todo = () => {
+const Todo = (props) => {
+
+    const { onClickTodoShowModal, onClickTodoDelete, todoId, disabled } = props;
+
     // token
-    const token = localStorage.getItem('token');
     const getToken = `Bearer ${localStorage.token}`;
     const navigate = useNavigate();
-    const todoId = useLocation().state?.todoId;
     const [isLoading, setIsLoading] = useState(true);
-    const disabled = useLocation().state?.disabled;
     const [todo, setTodo] = useState({
         categoryId: 0,
         todoTitle: "",
@@ -26,13 +27,11 @@ const Todo = () => {
         todoDate: "",
         todoDone: false
     });
+    // modal
+    const [showTodoMdfModal, setShowTodoMdfModal] = useState(false);
 
     const handleEdit = () => {
-        navigate(`/todos/${todoId}/edit`, {
-            state: {
-                todo : todo
-            }
-        });
+        setShowTodoMdfModal(!showTodoMdfModal);
     };
     const handleDelete = async () => {
         try {
@@ -42,11 +41,15 @@ const Todo = () => {
                 }
             });
             alert(response.data.message);
-            navigate(`/home`)
+            onClickTodoDelete();
         } catch (error) {
             console.log(error);
         }
     };
+    const onClickUpdateSave = () => {
+        setShowTodoMdfModal(false);
+        fetchData();
+    }
     // comment
     const [comments, setComments] = useState([]);
     const [isCommentMdf, setIsCommentMdf] = useState(false);
@@ -105,8 +108,7 @@ const Todo = () => {
             return null;
         }
         try {
-            // TODO : POST
-            const response = await axios.post(`http://34.121.86.244/todos/${todoId}/comments`, {
+            await axios.post(`http://34.121.86.244/todos/${todoId}/comments`, {
                 content: commentInpt
             }, {
                 headers: {
@@ -127,9 +129,7 @@ const Todo = () => {
             return null;
         }
         try {
-            // TODO : PUT
-            const response = await axios.put(`http://34.121.86.244/todos/${todoId}/comments/${comment}`, {
-                // TODO : content 데이터 넣기
+            await axios.put(`http://34.121.86.244/todos/${todoId}/comments/${comment}`, {
                 content: mdfCommentInpt
             })
             fetchCommentsData();
@@ -148,8 +148,7 @@ const Todo = () => {
         const commentDelete = confirm('댓글을 삭제하시겠습니까?')
         if (commentDelete) {
             try {
-                // TODO : DELETE
-                const response = await axios.delete(`http://34.121.86.244/todos/${todoId}/comments/${comment}`);
+                await axios.delete(`http://34.121.86.244/todos/${todoId}/comments/${comment}`);
                 alert('삭제되었습니다');
                 fetchCommentsData();
             } catch (error) {
@@ -183,6 +182,9 @@ const Todo = () => {
             <div className="modalContainer">
                 <span className="modalOverlay"></span>
                 <div className="modalWrap">
+                    <button className="modalClose">
+                        <img src={close} alt="닫기" onClick={onClickTodoShowModal} />
+                    </button>
                     <div className="modalHeader">
                         <p className="category">{categories[todo.categoryId]}</p>
                         <button className="menu">
@@ -216,7 +218,6 @@ const Todo = () => {
                                                     </div>
                                                     <p className="text">{el?.content}</p>
                                                 </div>
-                                                {/* TODO : 내가 작성한 댓글일 경우에 버튼 노출 */}
                                                 {
                                                     el?.nickname === userNickname &&
                                                     <div className="commentBtn">
@@ -231,12 +232,13 @@ const Todo = () => {
                                             </>
                                             :
                                             <>
-                                                {/* 수정 클릭 시 */}
-                                                {/* TODO : 수정 value 해야 함 */}
                                                 {
                                                     isCommentMdf && mdfCommentId === index &&
                                                     <div className="postComment">
                                                         <input type="text" placeholder="댓글 입력" value={mdfCommentInpt} onChange={onChangeMdfCommentInpt}/>
+                                                        <button className="cancel" onClick={() => setIsCommentMdf(false)}>
+                                                            <img src={close} alt="취소"/>
+                                                        </button>
                                                         <button className="send" onClick={() => onClickeUpdateComment(el.id)}></button>
                                                     </div>
                                                 }
@@ -253,6 +255,7 @@ const Todo = () => {
                     </div>
                 </div>
             </div>
+            { showTodoMdfModal && <TodoForm handleEdit={handleEdit} onClickUpdateSave={onClickUpdateSave} todo={todo} todoId={todoId} /> }
         </>
     )
 }

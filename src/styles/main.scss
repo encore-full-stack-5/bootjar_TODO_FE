@@ -168,7 +168,7 @@
                 left: 10px;
                 right: 10px;
               }
-              width: calc(100% - 24px - 21px - 12px - 40px);
+              width: calc(100% - 24px - 21px - 12px);
               font-size: $size3;
               cursor: pointer;
               white-space: nowrap;
@@ -179,15 +179,15 @@
               color: #AAAAAA;
             }
             .comment {
-              margin-right: 20px;
+              //margin-right: 20px;
               height: 20px;
             }
-            .move {
-              cursor: grab;
-              &:active {
-                cursor: grabbing;
-              }
-            }
+            //.move {
+            //  cursor: grab;
+            //  &:active {
+            //    cursor: grabbing;
+            //  }
+            //}
           }
         }
         &.friendTodo {
@@ -199,6 +199,12 @@
               margin-right: 0 !important;
             }
           }
+        }
+        .noneTodo {
+          height: 100%;
+          @include flexCenter;
+          font-size: $size5;
+          color: $gray;
         }
       }
       .friendListWrap {
@@ -232,6 +238,24 @@
             &:last-child {
               margin-right: 0;
             }
+          }
+        }
+      }
+      .myHome {
+        @include flexAlignCenter;
+        .me {
+          margin: {
+            top: 78px;
+            right: 20px;
+          }
+          img {
+            width: 50px;
+            height: 50px;
+          }
+          p {
+            margin-top: 5px;
+            text-align: center;
+            font-family: $bold;
           }
         }
       }
