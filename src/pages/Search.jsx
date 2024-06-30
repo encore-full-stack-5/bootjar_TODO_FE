@@ -51,18 +51,18 @@ const Search = () => {
                         <>
                             <ul className="searchList">
                                 {users.map(user => (
-                                    <li className="list" key={user.id}>
+                                    <li className="list" key={user.userId}>
                                         <Link to='/todo?query=search' state={{userId: user.userId, userNickname: user.userNickname}}>
                                             <img
-                                                src={friend.userImage === "default" || !friend.userImage ? basicProfile : friend.userImage}
+                                                src={user.image === "default" || !user.image ? basicProfile : user.image}
                                                 alt="프로필 사진"/>
                                             <p className="nickname">{user.nickname}</p>
                                             <div className="account">
-                                            <p>{user.userPublicScope ? "공개 계정" : "비공개 계정"}</p>
+                                                <p>{user.userPublicScope ? "공개 계정" : "비공개 계정"}</p>
                                                 {user.userPublicScope ? (
-                                                    <img src={publicAcc} alt="비공개"/>
+                                                    <img src={publicAcc} alt="공개"/>
                                                 ) : (
-                                                    <img src={nondisclosure} alt="공개"/>
+                                                    <img src={nondisclosure} alt="비공개"/>
                                                 )}
                                             </div>
                                         </Link>
