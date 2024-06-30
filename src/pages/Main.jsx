@@ -15,10 +15,17 @@ import commentCount from "../assets/images/commentCount.svg";
 import Calendar from "../component/Calendar.jsx";
 import FriendList from "../component/FriendList.jsx";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
     const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear()+"-"+String(new Date().getMonth()+1).padStart(2, '0')+"-"+new Date().getDate());
     const [todos, setTodos] = useState([]);
+
+    const navigate = useNavigate();
+
+    const handlMyInfoClick = () => {
+        navigate('/mypage');
+     };
 
     const fetchTodos = async () => {
         try {
@@ -98,7 +105,7 @@ const Main = () => {
                                 <p>TODO</p>
                             </div>
                             <div className="userSetting">
-                                <button>내 정보<img src={setting} alt={""} /></button>
+                                <button onClick={handlMyInfoClick}>내 정보<img src={setting} alt={""} /></button>
                             </div>
                         </div>
                         <div className="todoWrap">

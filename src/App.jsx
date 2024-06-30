@@ -6,6 +6,8 @@ import Main from "./pages/Main.jsx";
 import FriendMain from "./pages/FriendMain.jsx";
 import Todo from "./pages/Todo.jsx";
 import Search from "./pages/Search.jsx";
+import MyPage from './pages/MyPage.jsx';
+import MyPageForm from './pages/MyPageForm.jsx';
 
 function App() {
 
@@ -19,6 +21,8 @@ function App() {
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/login" element={<SignIn />}></Route>
           <Route path="/home" element={<Main />}></Route>
+          <Route path="/mypage" element={<MyPage />}></Route>
+          <Route path="/edit-profile" element={<MyPageForm />}></Route>
           {/*<Route path="/product/*" element={<Product />}></Route>*/}
           {/*<Route path="*" element={<NotFound />}></Route>*/}
         </Routes>
