@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "../styles/main.css";
 import Header from "../component/Header.jsx";
 import Checkbox from "../component/Checkbox.jsx";
-import { Link, useLocation } from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 // img
 import basicProfile from "../assets/images/basicProfile.svg";
 import comment from "../assets/images/comment.svg";
@@ -20,6 +20,7 @@ import { categories } from "../config_f/categories.js";
 
 const FriendMain = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const userId = location.state?.userId;
     const userNickname = location.state?.userNickname;
     const friend = new URLSearchParams(location.search).get("query") === "friend";
@@ -37,6 +38,9 @@ const FriendMain = () => {
         } catch (error) {
             alert("이미 처리된 요청입니다!")
         }
+    };
+    const handleDeleteClick = () => {
+        navigate('/home'); // Navigate to the /home route
     };
 
     const fetchFriendTodos = async () => {
@@ -132,7 +136,7 @@ const FriendMain = () => {
                                 )}
                             </div>
                             <div className="delete">
-                                <button><img src={deleteFriend} alt={""} /></button>
+                                <button onClick={handleDeleteClick}><img src={deleteFriend} alt={""}/></button>
                             </div>
                         </div>
                         <div className="todoWrap friendTodo">
