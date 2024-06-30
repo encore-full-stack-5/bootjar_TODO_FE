@@ -126,8 +126,13 @@
   padding-left: 10px;
   padding-bottom: 10px;
 }
+.modalContainer .modalWrap .todoComment .comment:has(.postComment) {
+  padding-left: 0;
+}
 .modalContainer .modalWrap .todoComment .comment img {
   height: 30px;
+  width: 30px;
+  border-radius: 10px;
 }
 .modalContainer .modalWrap .todoComment .comment .commentInfo {
   flex: 1;
