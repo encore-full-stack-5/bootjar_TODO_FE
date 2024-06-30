@@ -15,8 +15,8 @@ import commentCount from "../assets/images/commentCount.svg";
 import Calendar from "../component/Calendar.jsx";
 import FriendList from "../component/FriendList.jsx";
 import axios from "axios";
-import {categories} from "../config_f/categories.js";
 import {sendFriendRequest} from "../api_f/friend.js";
+import {categories} from "../config_f/categories.js";
 
 const FriendMain = () => {
     const userId = useLocation().state?.userId;
@@ -70,12 +70,6 @@ const FriendMain = () => {
             console.log(error);
         }
     }
-    const categories = {
-        1: '생활',
-        2: '운동',
-        3: '공부',
-        4: '기타'
-    };
     const groupedTodos = todos.reduce((acc, todo) => {
         const category = categories[todo.categoryId] || '기타';
         if (!acc[category]) acc[category] = [];
