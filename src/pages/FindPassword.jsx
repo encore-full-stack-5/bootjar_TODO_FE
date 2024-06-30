@@ -21,7 +21,6 @@ const FindPassword = () => {
 
     const onChangeEmailInpt = (e) => {
         setEmailInpt(e.target.value);
-        console.log(emailInpt);
     }
 
     return (
