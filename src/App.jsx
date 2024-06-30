@@ -9,6 +9,8 @@ import Search from "./pages/Search.jsx";
 import MyPage from './pages/MyPage.jsx';
 import MyPageForm from './pages/MyPageForm.jsx';
 import TodoForm from "./pages/TodoForm.jsx";
+import FindPassword from "./pages/FindPassword.jsx";
+import ChangePassword from "./pages/ChangePassword.jsx";
 
 function App() {
 
@@ -16,7 +18,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/todo" element={<FriendMain />}></Route>
+          {/*<Route path="/todo" element={<FriendMain />}></Route>*/}
           <Route path="/search" element={<Search />}></Route>
           <Route path="/detail" element={<Todo />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
@@ -26,6 +28,8 @@ function App() {
           <Route path="/edit-profile" element={<MyPageForm />}></Route>
           <Route path="/todos/new" element={<TodoForm />}></Route>
           <Route path="/todos/:id/edit" element={<TodoForm />} />
+          <Route path="/findPassword" element={<FindPassword />} />
+          <Route path="/changePassword" element={<ChangePassword />} />
           {/*<Route path="/product/*" element={<Product />}></Route>*/}
           {/*<Route path="*" element={<NotFound />}></Route>*/}
         </Routes>
