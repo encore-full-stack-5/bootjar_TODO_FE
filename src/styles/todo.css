@@ -126,8 +126,13 @@
   padding-left: 10px;
   padding-bottom: 10px;
 }
+.modalContainer .modalWrap .todoComment .comment:has(.postComment) {
+  padding-left: 0;
+}
 .modalContainer .modalWrap .todoComment .comment img {
   height: 30px;
+  width: 30px;
+  border-radius: 10px;
 }
 .modalContainer .modalWrap .todoComment .comment .commentInfo {
   flex: 1;
@@ -168,6 +173,13 @@
 }
 .modalContainer .modalWrap .todoComment .comment .commentBtn button:active {
   background-color: #D9D9D9;
+}
+.modalContainer .modalWrap .todoComment .noneComment {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #AAAAAA;
+  font-size: min(max(13px, 0.8125rem + (1vw - 16px) * 0.9375), 16px);
 }
 .modalContainer .modalWrap .postComment {
   width: 100%;

@@ -131,6 +131,10 @@
   height: 12px;
   margin-left: 5px;
 }
+.authContainer .signUpBtn .signUp.sendingEmail {
+  background-color: #a8e1ac;
+  color: #00970b;
+}
 .authContainer .signUpBtn.chng button {
   width: 100%;
 }
