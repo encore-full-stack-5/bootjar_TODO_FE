@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import "../styles/todo.css";
-import Checkbox from "../component/Checkbox.jsx";
 // img
 import basicProfile from "../assets/images/basicProfile.svg";
 import deleteComment from "../assets/images/deleteComment.svg";
