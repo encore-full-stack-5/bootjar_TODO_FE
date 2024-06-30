@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import "../styles/main.css";
 import Header from "../component/Header.jsx";
 import Checkbox from "../component/Checkbox.jsx";
-import { Link, useLocation } from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 // img
 import basicProfile from "../assets/images/basicProfile.svg";
 import comment from "../assets/images/comment.svg";
@@ -15,18 +15,17 @@ import commentCount from "../assets/images/commentCount.svg";
 import Calendar from "../component/Calendar.jsx";
 import FriendList from "../component/FriendList.jsx";
 import axios from "axios";
-import { sendFriendRequest } from "../api_f/friend.js";
-import { categories } from "../config_f/categories.js";
+import {sendFriendRequest} from "../api_f/friend.js";
+import {categories} from "../config_f/categories.js";
 
 const FriendMain = () => {
-    const location = useLocation();
-    const userId = location.state?.userId;
-    const userNickname = location.state?.userNickname;
+    const userId = useLocation().state?.userId;
+    const userNickname = useLocation().state?.userNickname;
     const friend = new URLSearchParams(location.search).get("query") === "friend";
-    const search = new URLSearchParams(location.search).get("query") === "search";
-    const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear() + "-" + String(new Date().getMonth() + 1).padStart(2, '0') + "-" + new Date().getDate());
+    const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear()+"-"+String(new Date().getMonth()+1).padStart(2, '0')+"-"+new Date().getDate());
     const [todos, setTodos] = useState([]);
     const token = localStorage.getItem('token');
+
 
     const sendRequest = async (receiverId) => {
         try {
@@ -35,7 +34,7 @@ const FriendMain = () => {
                 alert("요청을 보냈습니다!")
             }
         } catch (error) {
-            alert("이미 처리된 요청입니다!")
+            alert("이미 친구이거나 처리된 요청입니다!")
         }
     };
 
@@ -78,14 +77,14 @@ const FriendMain = () => {
         return acc;
     }, {});
     useEffect(() => {
-        if (friend) fetchFriendTodos();
-        else fetchUserTodos();
+        if(friend) fetchFriendTodos();
+        else  fetchUserTodos();
     }, [selectedDate, userId])
     return (
         <>
             <div className="mainContainer">
                 <span className="bgLayout"></span>
-                <Header />
+                <Header/>
                 <div className="mainWrap">
                     <div className="calendarContainer">
                         <div className="calendar">
@@ -94,7 +93,7 @@ const FriendMain = () => {
                         <div className="monthRecord">
                             <div className="record">
                                 <span className="icon">
-                                    <img src={done} alt={"완료"} />
+                                    <img src={done} alt={"완료"}/>
                                 </span>
                                 <div className="recordText">
                                     <p>완료</p>
@@ -103,7 +102,7 @@ const FriendMain = () => {
                             </div>
                             <div className="record">
                                 <span className="icon">
-                                    <img src={notDone} alt={"미완료"} />
+                                    <img src={notDone} alt={"미완료"}/>
                                 </span>
                                 <div className="recordText">
                                     <p>미완료</p>
@@ -112,7 +111,7 @@ const FriendMain = () => {
                             </div>
                             <div className="record">
                                 <span className="icon commentIcon">
-                                    <img src={commentCount} alt={"댓글"} />
+                                    <img src={commentCount} alt={"댓글"}/>
                                 </span>
                                 <div className="recordText">
                                     <p>댓글</p>
@@ -124,12 +123,10 @@ const FriendMain = () => {
                     <div className="todoContainer">
                         <div className="userProfile">
                             <div className="userInfo">
-                                <img src={basicProfile} alt={"프로필 사진"} />
+                                <img src={basicProfile} alt={"프로필 사진"}/>
                                 <p className="nickname">{userNickname}</p>
                                 <p>TODO</p>
-                                {search && (
-                                    <button className="request" onClick={() => sendRequest(userId)}>친구 요청</button>
-                                )}
+                                <button className="request" onClick={() => sendRequest(userId)}>친구 요청</button>
                             </div>
                             <div className="delete">
                                 <button><img src={deleteFriend} alt={""} /></button>
@@ -141,21 +138,21 @@ const FriendMain = () => {
                                     <p className="category"><img src={bottom} alt={""} />{category}</p>
                                     {groupedTodos[category].map(todo => (
                                         <li key={todo.todoId} className={`todo ${todo.todoDone ? 'done' : ''}`}>
-                                            <Checkbox id={`todo-${todo.todoId}`} check={todo.todoDone} disabled={true} />
+                                            <Checkbox id={`todo-${todo.todoId}`} check={todo.todoDone} disabled={true}/>
                                             <p>
-                                                <Link to='/detail' state={{ todoId: todo.todoId, disabled: false }}>
+                                                <Link to='/detail' state={{todoId: todo.todoId, disabled: false}}>
                                                     {todo.todoTitle}
                                                 </Link>
                                             </p>
-                                            <img src={comment} alt="댓글" className="comment" />
-                                            <button className="move"><img src={move} alt="이동" /></button>
+                                            <img src={comment} alt="댓글" className="comment"/>
+                                            <button className="move"><img src={move} alt="이동"/></button>
                                         </li>
                                     ))}
                                 </ul>
                             ))}
                             {todos.length === 0 && <p>할 일이 없습니다.</p>}
                         </div>
-                        <FriendList />
+                        <FriendList/>
                     </div>
                 </div>
             </div>
