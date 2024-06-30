@@ -15,6 +15,7 @@ import commentCount from "../assets/images/commentCount.svg";
 import Calendar from "../component/Calendar.jsx";
 import FriendList from "../component/FriendList.jsx";
 import axios from "axios";
+import {categories} from "../config_f/categories.js";
 import {sendFriendRequest} from "../api_f/friend.js";
 
 const FriendMain = () => {
@@ -23,6 +24,8 @@ const FriendMain = () => {
     const friend = new URLSearchParams(location.search).get("query") === "friend";
     const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear()+"-"+String(new Date().getMonth()+1).padStart(2, '0')+"-"+new Date().getDate());
     const [todos, setTodos] = useState([]);
+    const token = localStorage.getItem('token');
+
 
     const sendRequest = async (receiverId) => {
         try {
@@ -39,7 +42,7 @@ const FriendMain = () => {
         try {
             const response = await axios.get(`http://34.121.86.244/todos/friends/${userId}?query=${selectedDate}`, {
                 headers: {
-                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6InRlc3RAbmF2ZXIuY29tIiwibmlja05hbWUiOiLquYDsoJXroKwifQ.9comIDy7SoJ7BWytQEXiAxnUTj55foSGlYT_nKgb6PQ"
+                    Authorization: `Bearer ${token}`
                 }
             });
             setTodos(response.data.todos);
@@ -55,7 +58,7 @@ const FriendMain = () => {
         try {
             const response = await axios.get(`http://34.121.86.244/todos/users/${userId}?query=${selectedDate}`, {
                 headers: {
-                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6InRlc3RAbmF2ZXIuY29tIiwibmlja05hbWUiOiLquYDsoJXroKwifQ.9comIDy7SoJ7BWytQEXiAxnUTj55foSGlYT_nKgb6PQ"
+                    Authorization: `Bearer ${token}`
                 }
             });
             setTodos(response.data.todos);
