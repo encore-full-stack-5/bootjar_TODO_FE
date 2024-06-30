@@ -13,7 +13,7 @@ const FriendList = () => {
                 setFriends(res.data);
             }
         } catch (error) {
-            console.error("Error fetching friend list", error);
+            console.log("해당 사용자의 친구가 없습니다")
         }
     };
 
@@ -27,7 +27,7 @@ const FriendList = () => {
             <ul className="friendList">
                 {friends.map(friend => (
                     <li key={friend.userId} className="friend">
-                        <Link to='/todo?query=friend' state={{userId: friend.userId, userNickname: friend.userNickname}}>
+                        <Link to='/todo?query=friend' state={{userId: friend.userId, userNickname: friend.userNickname, userImage: friend.userImage}}>
                             <img
                                 src={friend.userImage === "default" || !friend.userImage ? basicProfile : friend.userImage}
                                 alt="프로필 사진"/>

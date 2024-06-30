@@ -23,6 +23,7 @@ const FriendMain = () => {
     const navigate = useNavigate();
     const userId = location.state?.userId;
     const userNickname = location.state?.userNickname;
+    const userImage = location.state?.userImage;
     const friend = new URLSearchParams(location.search).get("query") === "friend";
     const search = new URLSearchParams(location.search).get("query") === "search";
     const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear() + "-" + String(new Date().getMonth() + 1).padStart(2, '0') + "-" + new Date().getDate());
@@ -83,7 +84,7 @@ const FriendMain = () => {
     }, {});
     useEffect(() => {
         if (friend) fetchFriendTodos();
-        else fetchUserTodos();
+        else if (search) fetchUserTodos();
     }, [selectedDate, userId])
     return (
         <>
@@ -128,7 +129,9 @@ const FriendMain = () => {
                     <div className="todoContainer">
                         <div className="userProfile">
                             <div className="userInfo">
-                                <img src={basicProfile} alt={"프로필 사진"} />
+                                <img
+                                    src={userImage === "default" || !userImage ? basicProfile : userImage}
+                                    alt="프로필 사진"/>
                                 <p className="nickname">{userNickname}</p>
                                 <p>TODO</p>
                                 {search && (

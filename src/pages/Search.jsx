@@ -52,7 +52,7 @@ const Search = () => {
                             <ul className="searchList">
                                 {users.map(user => (
                                     <li className="list" key={user.userId}>
-                                        <Link to='/todo?query=search' state={{userId: user.userId, userNickname: user.userNickname}}>
+                                        <Link to='/todo?query=search' state={{userId: user.userId, userNickname: user.nickname, userImage: user.image}}>
                                             <img
                                                 src={user.image === "default" || !user.image ? basicProfile : user.image}
                                                 alt="프로필 사진"/>
