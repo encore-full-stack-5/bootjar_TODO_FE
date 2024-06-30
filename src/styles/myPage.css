@@ -24,6 +24,7 @@
 .myPageContainer .myPageWrap .profileImg {
   width: 200px;
   margin-top: 50px;
+  border-radius: 70px;
 }
 .myPageContainer .myPageWrap .nickname {
   font-family: "PretendardBold";
