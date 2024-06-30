@@ -25,6 +25,7 @@ function App() {
           <Route path="/mypage" element={<MyPage />}></Route>
           <Route path="/edit-profile" element={<MyPageForm />}></Route>
           <Route path="/todos/new" element={<TodoForm />}></Route>
+          <Route path="/todos/:id/edit" element={<TodoForm />} />
           {/*<Route path="/product/*" element={<Product />}></Route>*/}
           {/*<Route path="*" element={<NotFound />}></Route>*/}
         </Routes>
