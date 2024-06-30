@@ -10,6 +10,9 @@ import axios from "axios";
 import error from "eslint-plugin-react/lib/util/error.js";
 
 const Todo = () => {
+    // token
+    const getToken = `Bearer ${localStorage.token}`;
+
     const todoId = useLocation().state?.todoId;
     const disabled = useLocation().state?.disabled;
     const [todo, setTodo] = useState({
@@ -29,6 +32,8 @@ const Todo = () => {
     const [comments, setComments] = useState([]);
     const [isCommentMdf, setIsCommentMdf] = useState(false);
     const [commentInpt, setCommentInpt] = useState();
+    // user
+    const [userNickname, setUserNickname] = useState();
 
     const fetchData = async () => {
         try {
@@ -50,7 +55,21 @@ const Todo = () => {
         try {
             const response = await axios.get(`http://34.121.86.244/todos/${todoId}/comments`);
             setComments(response.data);
-            console.log("댓글: " + response.data);
+            console.log("댓글 조회: " + response.data);
+        } catch (error) {
+            alert(error.message);
+            console.log(error);
+        }
+    }
+    // [user]
+    const fetchUserData = async () => {
+        try {
+            const response = await axios.get(`http://34.121.86.244/users/me`, {
+                headers: {
+                    Authorization: getToken
+                }
+            });
+            setUserNickname(response.data.nickname);
         } catch (error) {
             alert(error.message);
             console.log(error);
@@ -63,16 +82,15 @@ const Todo = () => {
             return null;
         }
         try {
-            debugger;
             // TODO : POST
             const response = await axios.post(`http://34.121.86.244/todos/${todoId}/comments`, {
                 content: commentInpt
             }, {
                 headers: {
-                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6InRlc3RAbmF2ZXIuY29tIiwibmlja05hbWUiOiLquYDsoJXroKwifQ.9comIDy7SoJ7BWytQEXiAxnUTj55foSGlYT_nKgb6PQ"
-                },
-
+                    Authorization: getToken
+                }
             })
+            debugger;
             fetchCommentsData();
         } catch (error) {
             alert(error.message);
@@ -118,6 +136,7 @@ const Todo = () => {
     useEffect( () => {
         fetchData();
         fetchCommentsData();
+        fetchUserData();
     }, [])
     return (
         <>
@@ -158,14 +177,19 @@ const Todo = () => {
                                                     <p className="text">{el?.content}</p>
                                                 </div>
                                                 {/* TODO : 내가 작성한 댓글일 경우에 버튼 노출 */}
-                                                <div className="commentBtn">
-                                                    <button>
-                                                        <img src={mdfComment} alt="수정" onClick={setIsCommentMdf(true)}/>
-                                                    </button>
-                                                    <button>
-                                                        <img src={deleteComment} alt="삭제" onClick={onClickDeleteComment} />
-                                                    </button>
-                                                </div>
+                                                {
+                                                    el?.nickname === userNickname ?
+                                                    <div className="commentBtn">
+                                                        <button>
+                                                            <img src={mdfComment} alt="수정" onClick={setIsCommentMdf(true)}/>
+                                                        </button>
+                                                        <button>
+                                                            <img src={deleteComment} alt="삭제" onClick={onClickDeleteComment} />
+                                                        </button>
+                                                    </div>
+                                                        :
+                                                    <></>
+                                                }
                                             </>
                                             :
                                             <>
