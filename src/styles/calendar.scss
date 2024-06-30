@@ -4,11 +4,6 @@
   flex: 1;
   width: 100%;
   height: calc(100vh - 89px - 40px - 130px - 100px);
-  padding: {
-    bottom: 20px;
-    left: 10px;
-    right: 10px;
-  }
   .calendarHeader {
     @include flexAlignCenter;
     p {

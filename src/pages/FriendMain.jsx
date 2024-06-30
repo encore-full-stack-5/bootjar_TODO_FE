@@ -27,6 +27,7 @@ const FriendMain = () => {
     const search = new URLSearchParams(location.search).get("query") === "search";
     const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear() + "-" + String(new Date().getMonth() + 1).padStart(2, '0') + "-" + new Date().getDate());
     const [todos, setTodos] = useState([]);
+    const [userImg, setUserImg] = useState('');
     const token = localStorage.getItem('token');
 
     const sendRequest = async (receiverId) => {
@@ -75,16 +76,31 @@ const FriendMain = () => {
             console.log(error);
         }
     }
+    const fetchUser = async () => {
+        try {
+            const response = await axios.get(`http://34.121.86.244/todos/users/me`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setUserImg(response.data.image);
+        } catch (error) {
+            alert(error.message);
+        }
+    }
     const groupedTodos = todos.reduce((acc, todo) => {
         const category = categories[todo.categoryId] || '기타';
         if (!acc[category]) acc[category] = [];
         acc[category].push(todo);
         return acc;
     }, {});
+
     useEffect(() => {
+        fetchUser();
         if (friend) fetchFriendTodos();
         else fetchUserTodos();
     }, [selectedDate, userId])
+
     return (
         <>
             <div className="mainContainer">
@@ -95,35 +111,35 @@ const FriendMain = () => {
                         <div className="calendar">
                             <Calendar setDate={setSelectedDate} />
                         </div>
-                        <div className="monthRecord">
-                            <div className="record">
-                                <span className="icon">
-                                    <img src={done} alt={"완료"} />
-                                </span>
-                                <div className="recordText">
-                                    <p>완료</p>
-                                    <p className="count">0</p>
-                                </div>
-                            </div>
-                            <div className="record">
-                                <span className="icon">
-                                    <img src={notDone} alt={"미완료"} />
-                                </span>
-                                <div className="recordText">
-                                    <p>미완료</p>
-                                    <p className="count">1</p>
-                                </div>
-                            </div>
-                            <div className="record">
-                                <span className="icon commentIcon">
-                                    <img src={commentCount} alt={"댓글"} />
-                                </span>
-                                <div className="recordText">
-                                    <p>댓글</p>
-                                    <p className="count">3</p>
-                                </div>
-                            </div>
-                        </div>
+                        {/*<div className="monthRecord">*/}
+                        {/*    <div className="record">*/}
+                        {/*        <span className="icon">*/}
+                        {/*            <img src={done} alt={"완료"} />*/}
+                        {/*        </span>*/}
+                        {/*        <div className="recordText">*/}
+                        {/*            <p>완료</p>*/}
+                        {/*            <p className="count">0</p>*/}
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*    <div className="record">*/}
+                        {/*        <span className="icon">*/}
+                        {/*            <img src={notDone} alt={"미완료"} />*/}
+                        {/*        </span>*/}
+                        {/*        <div className="recordText">*/}
+                        {/*            <p>미완료</p>*/}
+                        {/*            <p className="count">1</p>*/}
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*    <div className="record">*/}
+                        {/*        <span className="icon commentIcon">*/}
+                        {/*            <img src={commentCount} alt={"댓글"} />*/}
+                        {/*        </span>*/}
+                        {/*        <div className="recordText">*/}
+                        {/*            <p>댓글</p>*/}
+                        {/*            <p className="count">3</p>*/}
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                     </div>
                     <div className="todoContainer">
                         <div className="userProfile">
@@ -152,14 +168,24 @@ const FriendMain = () => {
                                                 </Link>
                                             </p>
                                             <img src={comment} alt="댓글" className="comment" />
-                                            <button className="move"><img src={move} alt="이동" /></button>
+                                            {/*<button className="move"><img src={move} alt="이동" /></button>*/}
                                         </li>
                                     ))}
                                 </ul>
                             ))}
-                            {todos.length === 0 && <p>할 일이 없습니다.</p>}
+                            {todos.length === 0 && <p className="noneTodo">할 일이 없습니다.</p>}
                         </div>
-                        <FriendList />
+                        <div className="myHome">
+                            <li className="me">
+                                <Link to='/home'>
+                                    <img
+                                        src={userImg || basicProfile}
+                                        alt="프로필 사진"/>
+                                    <p>나</p>
+                                </Link>
+                            </li>
+                            <FriendList/>
+                        </div>
                     </div>
                 </div>
             </div>

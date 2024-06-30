@@ -176,7 +176,7 @@
 .mainContainer .mainWrap .todoContainer .todoWrap .todoList .todo p {
   margin-left: 10px;
   margin-right: 10px;
-  width: calc(100% - 24px - 21px - 12px - 40px);
+  width: calc(100% - 24px - 21px - 12px);
   font-size: min(max(15px, 0.9375rem + (1vw - 16px) * 0.9375), 18px);
   cursor: pointer;
   white-space: nowrap;
@@ -187,20 +187,21 @@
   color: #AAAAAA;
 }
 .mainContainer .mainWrap .todoContainer .todoWrap .todoList .todo .comment {
-  margin-right: 20px;
   height: 20px;
-}
-.mainContainer .mainWrap .todoContainer .todoWrap .todoList .todo .move {
-  cursor: grab;
-}
-.mainContainer .mainWrap .todoContainer .todoWrap .todoList .todo .move:active {
-  cursor: grabbing;
 }
 .mainContainer .mainWrap .todoContainer .todoWrap.friendTodo .todo p {
   width: calc(100% - 24px - 40px);
 }
 .mainContainer .mainWrap .todoContainer .todoWrap.friendTodo .todo .comment {
   margin-right: 0 !important;
+}
+.mainContainer .mainWrap .todoContainer .todoWrap .noneTodo {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: min(max(18px, 1.125rem + (1vw - 16px) * 1.875), 24px);
+  color: #AAAAAA;
 }
 .mainContainer .mainWrap .todoContainer .friendListWrap {
   margin-top: 50px;
@@ -235,6 +236,23 @@
 }
 .mainContainer .mainWrap .todoContainer .friendListWrap .friendList .friend:last-child {
   margin-right: 0;
+}
+.mainContainer .mainWrap .todoContainer .myHome {
+  display: flex;
+  align-items: center;
+}
+.mainContainer .mainWrap .todoContainer .myHome .me {
+  margin-top: 78px;
+  margin-right: 20px;
+}
+.mainContainer .mainWrap .todoContainer .myHome .me img {
+  width: 50px;
+  height: 50px;
+}
+.mainContainer .mainWrap .todoContainer .myHome .me p {
+  margin-top: 5px;
+  text-align: center;
+  font-family: "PretendardBold";
 }
 
 /*# sourceMappingURL=main.css.map */

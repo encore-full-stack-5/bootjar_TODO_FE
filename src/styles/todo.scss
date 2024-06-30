@@ -144,7 +144,7 @@
           flex: 1;
           margin-left: 10px;
           .commentHead {
-            @include flexBaseline;
+            @include flexAlignCenter;
             .nickname {
               font-family: $bold;
             }
@@ -204,7 +204,7 @@
         @include flexCenter;
       }
       .cancel {
-        background-color: $buttonGray1;
+        background-color: $buttonGray2;
         > img {
           width: 15px;
         }

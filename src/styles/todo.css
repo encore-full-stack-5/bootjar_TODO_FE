@@ -155,7 +155,7 @@
 }
 .modalContainer .modalWrap .todoComment .comment .commentInfo .commentHead {
   display: flex;
-  align-items: baseline;
+  align-items: center;
 }
 .modalContainer .modalWrap .todoComment .comment .commentInfo .commentHead .nickname {
   font-family: "PretendardBold";
@@ -216,7 +216,7 @@
   align-items: center;
 }
 .modalContainer .modalWrap .postComment .cancel {
-  background-color: #F8F8F8;
+  background-color: #F0F0F0;
 }
 .modalContainer .modalWrap .postComment .cancel > img {
   width: 15px;

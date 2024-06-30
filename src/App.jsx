@@ -18,7 +18,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          {/*<Route path="/todo" element={<FriendMain />}></Route>*/}
+          <Route path="/" element={<SignIn />}></Route>
           <Route path="/search" element={<Search />}></Route>
           <Route path="/detail" element={<Todo />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
@@ -30,8 +30,6 @@ function App() {
           <Route path="/todos/:id/edit" element={<TodoForm />} />
           <Route path="/findPassword" element={<FindPassword />} />
           <Route path="/changePassword" element={<ChangePassword />} />
-          {/*<Route path="/product/*" element={<Product />}></Route>*/}
-          {/*<Route path="*" element={<NotFound />}></Route>*/}
         </Routes>
       </BrowserRouter>
     </>
