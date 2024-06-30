@@ -134,8 +134,13 @@
           left: 10px;
           bottom: 10px;
         }
+        &:has(.postComment) {
+          padding-left: 0;
+        }
         img {
           height: 30px;
+          width: 30px;
+          border-radius: 10px;
         }
         .commentInfo {
           flex: 1;

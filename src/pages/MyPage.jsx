@@ -15,7 +15,7 @@ const MyPage = () => {
     const [userInfo, setUserInfo] = useState({
         email: '',
         nickname: '',
-        userPublicScope: false,
+        userPublicScope: true,
         image: basicProfile,
     });
 
@@ -59,11 +59,11 @@ const MyPage = () => {
                     <p className="nickname">{userInfo.nickname}</p>
                     <p className="email">{userInfo.email}</p>
                     <div className="account">
-                        <p>{userInfo.userPublicScope ? '공개 계정' : '비공개 계정'}</p>
+                    <p>{userInfo.userPublicScope ? '비공개 계정' : '공개 계정'}</p>
                         {userInfo.userPublicScope ? (
-                            <img src={Public} alt={"공개"} />
+                         <img src={nondisclosure} alt={"비공개"} />
                         ) : (
-                            <img src={nondisclosure} alt={"비공개"} />
+                        <img src={Public} alt={"공개"} />
                         )}
                     </div>
                     <div className="myPageBtn">

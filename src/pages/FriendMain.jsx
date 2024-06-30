@@ -15,6 +15,8 @@ import commentCount from "../assets/images/commentCount.svg";
 import Calendar from "../component/Calendar.jsx";
 import FriendList from "../component/FriendList.jsx";
 import axios from "axios";
+import {sendFriendRequest} from "../api_f/friend.js";
+import {categories} from "../config_f/categories.js";
 
 const FriendMain = () => {
     const userId = useLocation().state?.userId;
@@ -22,12 +24,25 @@ const FriendMain = () => {
     const friend = new URLSearchParams(location.search).get("query") === "friend";
     const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear()+"-"+String(new Date().getMonth()+1).padStart(2, '0')+"-"+new Date().getDate());
     const [todos, setTodos] = useState([]);
+    const token = localStorage.getItem('token');
+
+
+    const sendRequest = async (receiverId) => {
+        try {
+            const res = await sendFriendRequest(receiverId);
+            if (res.status === 200) {
+                alert("요청을 보냈습니다!")
+            }
+        } catch (error) {
+            alert("이미 친구이거나 처리된 요청입니다!")
+        }
+    };
 
     const fetchFriendTodos = async () => {
         try {
             const response = await axios.get(`http://34.121.86.244/todos/friends/${userId}?query=${selectedDate}`, {
                 headers: {
-                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6InRlc3RAbmF2ZXIuY29tIiwibmlja05hbWUiOiLquYDsoJXroKwifQ.9comIDy7SoJ7BWytQEXiAxnUTj55foSGlYT_nKgb6PQ"
+                    Authorization: `Bearer ${token}`
                 }
             });
             setTodos(response.data.todos);
@@ -43,7 +58,7 @@ const FriendMain = () => {
         try {
             const response = await axios.get(`http://34.121.86.244/todos/users/${userId}?query=${selectedDate}`, {
                 headers: {
-                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6InRlc3RAbmF2ZXIuY29tIiwibmlja05hbWUiOiLquYDsoJXroKwifQ.9comIDy7SoJ7BWytQEXiAxnUTj55foSGlYT_nKgb6PQ"
+                    Authorization: `Bearer ${token}`
                 }
             });
             setTodos(response.data.todos);
@@ -55,12 +70,6 @@ const FriendMain = () => {
             console.log(error);
         }
     }
-    const categories = {
-        1: '생활',
-        2: '운동',
-        3: '공부',
-        4: '기타'
-    };
     const groupedTodos = todos.reduce((acc, todo) => {
         const category = categories[todo.categoryId] || '기타';
         if (!acc[category]) acc[category] = [];
@@ -117,7 +126,7 @@ const FriendMain = () => {
                                 <img src={basicProfile} alt={"프로필 사진"}/>
                                 <p className="nickname">{userNickname}</p>
                                 <p>TODO</p>
-                                <button className="request">친구 요청</button>
+                                <button className="request" onClick={() => sendRequest(userId)}>친구 요청</button>
                             </div>
                             <div className="delete">
                                 <button><img src={deleteFriend} alt={""} /></button>

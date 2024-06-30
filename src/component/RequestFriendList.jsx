@@ -4,12 +4,12 @@ import accept from "../assets/images/accept.svg";
 import refuse from "../assets/images/refuse.svg";
 import { getRequests, respondToRequests } from "../api_f/friend.js";
 
-const RequestFriendList = ({ token }) => {
+const RequestFriendList = () => {
     const [requests, setRequests] = useState([]);
 
     const getRequestList = async () => {
         try {
-            const res = await getRequests(token);
+            const res = await getRequests();
             if (res.status === 200) {
                 setRequests(res.data); // Assuming the API response structure has the friend list in res.data
             }
@@ -21,7 +21,7 @@ const RequestFriendList = ({ token }) => {
     const respond = async (requestId, acceptRequest) => {
         try {
             console.log(acceptRequest);
-            const res = await respondToRequests({token, requestId, acceptRequest});
+            const res = await respondToRequests({ requestId, acceptRequest});
             if (res.status === 200) {
                 // Assuming the API returns updated list of requests after responding
                 setRequests(res.data);

@@ -17,17 +17,23 @@ import FriendList from "../component/FriendList.jsx";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import {Link} from "react-router-dom";
+import {categories} from "../config_f/categories.js";
 
 
 const Main = () => {
     const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear()+"-"+String(new Date().getMonth()+1).padStart(2, '0')+"-"+new Date().getDate());
     const [todos, setTodos] = useState([]);
     const [nickname, setNickname] = useState('');
+    const [image, setImage] = useState('');
     const navigate = useNavigate();
 
     const handlMyInfoClick = () => {
         navigate('/mypage');
      };
+
+    const handleAddTODO = () => {
+        navigate('/todos/new')
+    }
 
      useEffect(() => {
         fetchMyInfo();
@@ -43,9 +49,9 @@ const Main = () => {
                 }
             });
 
-            const { nickname } = response.data;
+            const { nickname ,image} = response.data;
             setNickname(nickname);
-
+            setImage(image)
         } catch (error) {
             alert(error.message);
             console.log(error);
@@ -57,7 +63,7 @@ const Main = () => {
         try {
             const response = await axios.get(`http://34.121.86.244/todos/me?query=${selectedDate}`, {
                 headers: {
-                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6InRlc3RAbmF2ZXIuY29tIiwibmlja05hbWUiOiLquYDsoJXroKwifQ.9comIDy7SoJ7BWytQEXiAxnUTj55foSGlYT_nKgb6PQ"
+                    Authorization: `Bearer ${token}`
                 }
             });
             setTodos(response.data.todos);
@@ -68,12 +74,7 @@ const Main = () => {
             console.log(error);
         }
     }
-    const categories = {
-        1: '생활',
-        2: '운동',
-        3: '공부',
-        4: '기타'
-    };
+
     const groupedTodos = todos.reduce((acc, todo) => {
         const category = categories[todo.categoryId] || '기타';
         if (!acc[category]) acc[category] = [];
@@ -126,9 +127,10 @@ const Main = () => {
                     <div className="todoContainer">
                         <div className="userProfile">
                             <div className="userInfo">
-                                <img src={basicProfile} alt={"프로필 사진"}/>
+                                <img src={image || basicProfile} alt={"프로필 사진"}/>
                                 <p className="nickname">{nickname}</p>
                                 <p>TODO</p>
+                                <button className="request" onClick={handleAddTODO}>TODO 추가</button>
                             </div>
                             <div className="userSetting">
                                 <button onClick={handlMyInfoClick}>내 정보<img src={setting} alt={""} /></button>
