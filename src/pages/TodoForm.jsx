@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "../styles/todo.css";
 import Checkbox from "../component/Checkbox.jsx";
 // img
@@ -8,9 +8,12 @@ import mdfComment from "../assets/images/mdfComment.svg";
 import Input from "../component/Input.jsx";
 import {categories} from "../config_f/categories.js";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 
 const TodoForm = () => {
+    const { id } = useParams();
+    const isEditMode = !!id;
+    const todoData = useLocation().state?.todo;
     const [formData, setFormData] = useState({
         categoryId: 1,
         todoTitle: '',
@@ -31,27 +34,49 @@ const TodoForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            console.log(formData);
-            const response = await axios.post('http://34.121.86.244/todos',
-                formData, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            console.log('Todo created:', response.data);
-            alert("성공적으로 생성되었습니다")
-            navigate('/home');
-            // 여기에 성공 메시지를 표시하거나 다른 작업을 수행할 수 있습니다.
-        } catch (error) {
-            console.error('Error creating todo:', error);
-            alert("생성 실패")
-            // 여기에 에러 메시지를 표시할 수 있습니다.
+        if (isEditMode) {
+            try {
+                console.log(formData);
+                const response = await axios.put(`http://34.121.86.244/todos/${id}`,
+                    formData, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                console.log('Todo updated:', response.data);
+                alert(response.data.message)
+                navigate('/home');
+            } catch (error) {
+                console.error('Error updating todo:', error);
+                alert("수정 실패")
+            }
+        } else {
+            try {
+                console.log(formData);
+                const response = await axios.post('http://34.121.86.244/todos',
+                    formData, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                console.log('Todo created:', response.data);
+                alert(response.data.message)
+                navigate('/home');
+            } catch (error) {
+                console.error('Error creating todo:', error);
+                alert("생성 실패")
+            }
         }
     };
     const handleCancel = () => {
         navigate('/home'); // 취소 버튼 클릭 시 홈으로 이동
     };
+
+    useEffect(() => {
+        if (isEditMode) {
+            setFormData(todoData);
+        }
+    }, []);
 
     return (
         <>
@@ -73,6 +98,7 @@ const TodoForm = () => {
                     <div className="modalBody">
                         <div className="todo">
                             <input
+                                className="inptForm"
                                 type="text"
                                 name="todoTitle"
                                 placeholder="할일명"
@@ -80,6 +106,7 @@ const TodoForm = () => {
                                 onChange={handleChange}
                             />
                             <input
+                                className="inptForm"
                                 type="date"
                                 name="todoDate"
                                 value={formData.todoDate}
@@ -97,7 +124,7 @@ const TodoForm = () => {
                     </div>
                     <div className="todoFormBtn">
                         <button type="button" onClick={handleCancel}>취소</button>
-                        <button type="submit" onClick={handleSubmit}>저장</button>
+                        <button type="submit" onClick={handleSubmit}>{isEditMode? "수정" : "생성"}</button>
                     </div>
                 </div>
             </div>
