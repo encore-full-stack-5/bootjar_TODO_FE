@@ -74,6 +74,19 @@ const Main = () => {
             console.log(error);
         }
     }
+    const updateDone = async (todoId) => {
+        try {
+            const response = await axios.put(`http://34.121.86.244/todos/${todoId}/check`,
+                {},{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            // alert(response.data.message)
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const groupedTodos = todos.reduce((acc, todo) => {
         const category = categories[todo.categoryId] || '기타';
@@ -142,7 +155,7 @@ const Main = () => {
                                     <p className="category"><img src={bottom} alt={""} />{category}</p>
                                     {groupedTodos[category].map(todo => (
                                         <li key={todo.todoId} className={`todo ${todo.todoDone ? 'done' : ''}`}>
-                                            <Checkbox id={`todo-${todo.todoId}`} check={todo.todoDone} />
+                                            <Checkbox id={`todo-${todo.todoId}`} check={todo.todoDone} clickHandler={()=>updateDone(todo.todoId)} />
                                             <p>
                                                 <Link to='/detail' state={{todoId: todo.todoId, disabled: true}}>
                                                     {todo.todoTitle}

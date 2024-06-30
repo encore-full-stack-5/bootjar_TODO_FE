@@ -17,6 +17,7 @@ const Todo = () => {
     const getToken = `Bearer ${localStorage.token}`;
     const navigate = useNavigate();
     const todoId = useLocation().state?.todoId;
+    const [isLoading, setIsLoading] = useState(true);
     const disabled = useLocation().state?.disabled;
     const [todo, setTodo] = useState({
         categoryId: 0,
@@ -67,6 +68,8 @@ const Todo = () => {
         } catch (error) {
             alert(error.message);
             console.log(error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -169,7 +172,12 @@ const Todo = () => {
         fetchData();
         fetchCommentsData();
         fetchUserData();
-    }, [])
+    }, []);
+
+    if (isLoading) {
+        return <div>로딩 중...</div>; // 또는 더 세련된 로딩 컴포넌트를 사용할 수 있습니다.
+    }
+
     return (
         <>
             <div className="modalContainer">
