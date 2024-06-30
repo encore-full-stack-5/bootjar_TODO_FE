@@ -25,6 +25,7 @@
   width: 200px;
   margin-top: 50px;
   border-radius: 70px;
+  border: 1px solid #E9EAEE;
 }
 .myPageContainer .myPageWrap .nickname {
   font-family: "PretendardBold";
