@@ -168,7 +168,7 @@ const FriendMain = () => {
                                                 </Link>
                                             </p>
                                             <img src={comment} alt="댓글" className="comment" />
-                                            <button className="move"><img src={move} alt="이동" /></button>
+                                            {/*<button className="move"><img src={move} alt="이동" /></button>*/}
                                         </li>
                                     ))}
                                 </ul>
