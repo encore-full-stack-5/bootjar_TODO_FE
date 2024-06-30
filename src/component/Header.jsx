@@ -5,7 +5,6 @@ import friendRequest from "../assets/images/friendRequest.svg";
 import { useNavigate } from "react-router-dom";
 import RequestFriendList from "./RequestFriendList.jsx";
 
-
 const Header = () => {
     const navigate = useNavigate();
 
@@ -56,7 +55,7 @@ const Header = () => {
                 </div>
             </div>
         </>
-     );
+        );
     }
 }
 

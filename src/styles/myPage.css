@@ -24,6 +24,8 @@
 .myPageContainer .myPageWrap .profileImg {
   width: 200px;
   margin-top: 50px;
+  border-radius: 70px;
+  border: 1px solid #E9EAEE;
 }
 .myPageContainer .myPageWrap .nickname {
   font-family: "PretendardBold";
@@ -92,8 +94,13 @@
 .myPageContainer .myPageFormWrap .formContainer .profileImgForm {
   position: relative;
 }
-.myPageContainer .myPageFormWrap .formContainer .profileImgForm img {
+.myPageContainer .myPageFormWrap .formContainer .profileImgForm > img {
   width: 200px;
+  border: 1px solid #E9EAEE;
+  border-radius: 70px;
+}
+.myPageContainer .myPageFormWrap .formContainer .profileImgForm input[type=file] {
+  display: none;
 }
 .myPageContainer .myPageFormWrap .formContainer .profileImgForm .chngImg {
   position: absolute;
@@ -107,10 +114,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
-.myPageContainer .myPageFormWrap .formContainer .profileImgForm .chngImg::after {
-  content: url("../assets/images/modifyImg.svg");
-  padding-top: 5px;
+.myPageContainer .myPageFormWrap .formContainer .profileImgForm .chngImg img {
+  width: 20px;
+  padding-left: 2px;
 }
 .myPageContainer .myPageFormWrap .formContainer .inptFormWrap {
   width: 340px;

@@ -37,6 +37,9 @@
 .modalContainer .modalWrap .modalHeader .category {
   font-family: "PretendardBold";
 }
+.modalContainer .modalWrap .modalHeader > select {
+  width: 150px;
+}
 .modalContainer .modalWrap .modalHeader .menu {
   position: relative;
 }
@@ -80,6 +83,16 @@
   align-items: center;
   margin-bottom: 20px;
 }
+.modalContainer .modalWrap .modalBody .todo .inptForm {
+  margin-bottom: 0;
+}
+.modalContainer .modalWrap .modalBody .todo .inptForm:first-child {
+  width: calc(100% - 160px);
+  margin-right: 10px;
+}
+.modalContainer .modalWrap .modalBody .todo .inptForm:last-child {
+  width: 150px;
+}
 .modalContainer .modalWrap .modalBody .todo .todoTitle {
   margin-left: 10px;
   margin-right: 10px;
@@ -97,6 +110,9 @@
   height: 100px;
   overflow: auto;
   margin-bottom: 10px;
+}
+.modalContainer .modalWrap .modalBody > textarea {
+  height: 200px !important;
 }
 .modalContainer .modalWrap .todoComment {
   width: 100%;
@@ -175,6 +191,23 @@
 .modalContainer .modalWrap .postComment .send::after {
   content: url("../assets/images/send.svg");
   padding-top: 4px;
+}
+.modalContainer .modalWrap .todoFormBtn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.modalContainer .modalWrap .todoFormBtn button {
+  border-radius: 20px;
+  padding: 10px 30px;
+}
+.modalContainer .modalWrap .todoFormBtn button:first-child {
+  background-color: #E9EAEE;
+  margin-right: 10px;
+}
+.modalContainer .modalWrap .todoFormBtn button:last-child {
+  background-color: #F470A4;
+  color: #FFFFFF;
 }
 
 /*# sourceMappingURL=todo.css.map */

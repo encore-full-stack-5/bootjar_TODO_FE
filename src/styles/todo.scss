@@ -24,6 +24,9 @@
       .category {
         font-family: $bold;
       }
+      > select {
+        width: 150px;
+      }
       .menu {
         position: relative;
         &::before {
@@ -68,6 +71,16 @@
       .todo {
         @include flexAlignCenter;
         margin-bottom: 20px;
+        .inptForm {
+          margin-bottom: 0;
+          &:first-child {
+            width: calc(100% - 160px);
+            margin-right: 10px;
+          }
+          &:last-child {
+            width: 150px;
+          }
+        }
         .todoTitle {
           margin: {
             left: 10px;
@@ -90,6 +103,9 @@
         height: 100px;
         overflow: auto;
         margin-bottom: 10px;
+      }
+      > textarea {
+        height: 200px !important;
       }
     }
     .todoComment {
@@ -162,6 +178,22 @@
         &::after {
           content: url("../assets/images/send.svg");
           padding-top: 4px;
+        }
+      }
+    }
+    .todoFormBtn {
+      @include flexAlignCenter;
+      justify-content: flex-end;
+      button {
+        border-radius: $radius;
+        padding: 10px 30px;
+        &:first-child {
+          background-color: $buttonGray3;
+          margin-right: 10px;
+        }
+        &:last-child {
+          background-color: $main;
+          color: #FFFFFF;
         }
       }
     }

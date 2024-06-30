@@ -16,6 +16,8 @@ import Calendar from "../component/Calendar.jsx";
 import FriendList from "../component/FriendList.jsx";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import {Link} from "react-router-dom";
+
 
 const Main = () => {
     const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear()+"-"+String(new Date().getMonth()+1).padStart(2, '0')+"-"+new Date().getDate());
@@ -115,7 +117,11 @@ const Main = () => {
                                     {groupedTodos[category].map(todo => (
                                         <li key={todo.todoId} className={`todo ${todo.todoDone ? 'done' : ''}`}>
                                             <Checkbox id={`todo-${todo.todoId}`} check={todo.todoDone} />
-                                            <p>{todo.todoTitle}</p>
+                                            <p>
+                                                <Link to='/detail' state={{todoId: todo.todoId, disabled: true}}>
+                                                    {todo.todoTitle}
+                                                </Link>
+                                            </p>
                                             <img src={comment} alt="댓글" className="comment" />
                                             <button className="move"><img src={move} alt="이동" /></button>
                                         </li>
