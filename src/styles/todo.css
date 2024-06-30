@@ -24,9 +24,7 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
-  min-width: 600px;
-  max-width: 800px;
+  width: 600px;
   padding: 30px;
   background-color: #FFFFFF;
   border-radius: 30px;
@@ -207,15 +205,24 @@
 .modalContainer .modalWrap .postComment input {
   flex: 1;
 }
-.modalContainer .modalWrap .postComment .send {
+.modalContainer .modalWrap .postComment .send,
+.modalContainer .modalWrap .postComment .cancel {
   width: 50px;
   height: 50px;
   margin-left: 5px;
   border-radius: 20px;
-  background-color: #FDE2ED;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.modalContainer .modalWrap .postComment .cancel {
+  background-color: #F8F8F8;
+}
+.modalContainer .modalWrap .postComment .cancel > img {
+  width: 15px;
+}
+.modalContainer .modalWrap .postComment .send {
+  background-color: #FDE2ED;
 }
 .modalContainer .modalWrap .postComment .send::after {
   content: url("../assets/images/send.svg");

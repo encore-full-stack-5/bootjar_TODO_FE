@@ -14,9 +14,7 @@
   }
   .modalWrap {
     @include center;
-    width: 50%;
-    min-width: 600px;
-    max-width: 800px;
+    width: 600px;
     padding: 30px;
     background-color: #FFFFFF;
     border-radius: 30px;
@@ -197,13 +195,22 @@
       input {
         flex: 1;
       }
-      .send {
+      .send,
+      .cancel {
         width: 50px;
         height: 50px;
         margin-left: 5px;
         border-radius: $radius;
-        background-color: $sub;
         @include flexCenter;
+      }
+      .cancel {
+        background-color: $buttonGray1;
+        > img {
+          width: 15px;
+        }
+      }
+      .send {
+        background-color: $sub;
         &::after {
           content: url("../assets/images/send.svg");
           padding-top: 4px;

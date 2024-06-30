@@ -7,8 +7,8 @@
   .myPageWrap {
     text-align: center;
     width: 300px;
-    //height: calc(100vh - 130px);
-    height: 100%;
+    height: calc(100vh - 130px);
+    //height: 100%;
     @include flexCenter;
     flex-direction: column;
     margin: 0 auto;
