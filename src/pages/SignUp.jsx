@@ -72,7 +72,7 @@ function SignUp() {
     };
   
     const handleBackClick = () => {
-      navigate('/home');
+      navigate('/login');
     };
   
     return (
