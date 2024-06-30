@@ -15,6 +15,7 @@ import commentCount from "../assets/images/commentCount.svg";
 import Calendar from "../component/Calendar.jsx";
 import FriendList from "../component/FriendList.jsx";
 import axios from "axios";
+import {categories} from "../config_f/categories.js";
 
 const FriendMain = () => {
     const userId = useLocation().state?.userId;
@@ -22,12 +23,14 @@ const FriendMain = () => {
     const friend = new URLSearchParams(location.search).get("query") === "friend";
     const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear()+"-"+String(new Date().getMonth()+1).padStart(2, '0')+"-"+new Date().getDate());
     const [todos, setTodos] = useState([]);
+    const token = localStorage.getItem('token');
+
 
     const fetchFriendTodos = async () => {
         try {
             const response = await axios.get(`http://34.121.86.244/todos/friends/${userId}?query=${selectedDate}`, {
                 headers: {
-                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6InRlc3RAbmF2ZXIuY29tIiwibmlja05hbWUiOiLquYDsoJXroKwifQ.9comIDy7SoJ7BWytQEXiAxnUTj55foSGlYT_nKgb6PQ"
+                    Authorization: `Bearer ${token}`
                 }
             });
             setTodos(response.data.todos);
@@ -43,7 +46,7 @@ const FriendMain = () => {
         try {
             const response = await axios.get(`http://34.121.86.244/todos/users/${userId}?query=${selectedDate}`, {
                 headers: {
-                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6InRlc3RAbmF2ZXIuY29tIiwibmlja05hbWUiOiLquYDsoJXroKwifQ.9comIDy7SoJ7BWytQEXiAxnUTj55foSGlYT_nKgb6PQ"
+                    Authorization: `Bearer ${token}`
                 }
             });
             setTodos(response.data.todos);
@@ -55,12 +58,6 @@ const FriendMain = () => {
             console.log(error);
         }
     }
-    const categories = {
-        1: '생활',
-        2: '운동',
-        3: '공부',
-        4: '기타'
-    };
     const groupedTodos = todos.reduce((acc, todo) => {
         const category = categories[todo.categoryId] || '기타';
         if (!acc[category]) acc[category] = [];
