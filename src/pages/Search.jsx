@@ -6,6 +6,7 @@ import nondisclosure from "../assets/images/nondisclosure.svg";
 import publicAcc from "../assets/images/public.svg";
 import Header from "../component/Header.jsx";
 import { getSearchList } from "../api_f/friend.js";
+import {Link} from "react-router-dom";
 
 const Search = () => {
     const location = useLocation();
@@ -51,16 +52,20 @@ const Search = () => {
                             <ul className="searchList">
                                 {users.map(user => (
                                     <li className="list" key={user.id}>
-                                        <img src={basicProfile} alt="프로필 사진"/>
-                                        <p className="nickname">{user.nickname}</p>
-                                        <div className="account">
+                                        <Link to='/todo?query=search' state={{userId: user.userId, userNickname: user.userNickname}}>
+                                            <img
+                                                src={friend.userImage === "default" || !friend.userImage ? basicProfile : friend.userImage}
+                                                alt="프로필 사진"/>
+                                            <p className="nickname">{user.nickname}</p>
+                                            <div className="account">
                                             <p>{user.userPublicScope ? "공개 계정" : "비공개 계정"}</p>
-                                            {user.userPublicScope ? (
-                                                <img src={publicAcc} alt="공개"/>
-                                            ) : (
-                                                <img src={nondisclosure} alt="비공개"/>
-                                            )}
-                                        </div>
+                                                {user.userPublicScope ? (
+                                                    <img src={publicAcc} alt="비공개"/>
+                                                ) : (
+                                                    <img src={nondisclosure} alt="공개"/>
+                                                )}
+                                            </div>
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>

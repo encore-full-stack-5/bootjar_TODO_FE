@@ -24,18 +24,19 @@ const MyPageForm = () => {
     const [profileImg, setProfileImg] = useState(basicProfile);
     const [userInfo, setUserInfo] = useState({ email: '', nickname: '', password: '', userPublicScope: false, image: '' });
     const [showPasswordFields, setShowPasswordFields] = useState(false);
+    const [checked, setChecked] = useState(false); // Set default to false
 
     const onChangeProfileImg = (e) => {
         const file = e.target.files[0];
         const reader = new FileReader();
 
         reader.onloadend = () => {
-            setProfileImg(reader.result); // base64 인코딩된 URL로 설정
+            setProfileImg(reader.result);
             setUserInfo({ ...userInfo, image: file });
         };
 
         if (file) {
-            reader.readAsDataURL(file); // 파일을 읽어서 base64 URL로 변환
+            reader.readAsDataURL(file);
         }
     };
 
@@ -57,6 +58,9 @@ const MyPageForm = () => {
             const { email, userPublicScope, image, nickname } = response.data;
             setUserInfo({ email, userPublicScope, image, nickname, password: '' });
             setFetchedUserInfo({ userPublicScope, image, nickname, password: '' });
+            setChecked(userPublicScope); // Ensure the checked state is set here
+            console.log(`Fetched userPublicScope: ${userPublicScope}`); // Debug statement
+
             if (image) {
                 setProfileImg(image);
             }
@@ -68,7 +72,10 @@ const MyPageForm = () => {
     };
 
     const handlePublicScopeChange = () => {
-        setUserInfo({ ...userInfo, userPublicScope: !userInfo.userPublicScope });
+        const newChecked = !checked;
+        setChecked(newChecked);
+        setUserInfo({ ...userInfo, userPublicScope: newChecked });
+        console.log(`Checkbox state changed to: ${newChecked}`); // Debug statement
     };
 
     const handleInputChange = (e) => {
@@ -160,7 +167,7 @@ const MyPageForm = () => {
                         <div className="nondisclosureYn">
                             <div className="question">
                                 <p>비공개 계정을 원하시나요?</p>
-                                <Checkbox id="yn" checked={userInfo.userPublicScope} onClick={handlePublicScopeChange} />
+                                <Checkbox id="yn" checked={checked} onChange={handlePublicScopeChange} />
                             </div>
                             <p className="description">비공개로 할 경우 친구에게만 내 TODO가 노출됩니다.</p>
                         </div>
