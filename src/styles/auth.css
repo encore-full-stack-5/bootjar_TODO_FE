@@ -91,8 +91,8 @@
   width: 100%;
   background-color: #F8F8F8;
   text-align: center;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   border-radius: 10px;
 }
 .authContainer .loginForm .findPasswordBtn button:hover {
@@ -160,6 +160,17 @@
 }
 .authContainer .findPasswordDesc p span {
   text-decoration: underline;
+  color: #333333;
+}
+.authContainer .updateSuccess {
+  margin-top: 20px;
+  text-align: center;
+  font-size: min(max(18px, 1.125rem + (1vw - 16px) * 1.875), 24px);
+  color: #888888;
+}
+.authContainer .updateSuccess span {
+  text-decoration: underline;
+  font-family: "PretendardBold";
   color: #333333;
 }
 
