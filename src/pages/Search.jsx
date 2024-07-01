@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import "../styles/search.css";
-import basicProfile from "../assets/images/basicProfile.svg";
-import nondisclosure from "../assets/images/nondisclosure.svg";
-import publicAcc from "../assets/images/public.svg";
 import Header from "../component/Header.jsx";
 import { getSearchList } from "../api_f/friend.js";
 import {Link} from "react-router-dom";
+// img
+import basicProfile from "../assets/images/basicProfile.svg";
+import nondisclosure from "../assets/images/nondisclosure.svg";
+import publicAcc from "../assets/images/public.svg";
 
 const Search = () => {
     const location = useLocation();
@@ -18,7 +19,6 @@ const Search = () => {
         const query = new URLSearchParams(location.search);
         const queryParam = query.get('query');
         setSearchQuery(queryParam || '');
-        // Call search function when component mounts or query changes
         search(queryParam);
     }, [location.search]);
 
@@ -32,7 +32,7 @@ const Search = () => {
             const res = await getSearchList({ nickname: query });
             if (res.status === 200) {
                 setUsers(res.data);
-                setSearchError(false); // Clear search error if successful
+                setSearchError(false);
             }
         } catch (error) {
             console.error("Error fetching friend list", error);

@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import "../styles/myPage.css";
 import Header from "../component/Header.jsx";
+import { useNavigate } from 'react-router-dom';
+import Input from "../component/Input.jsx";
+import Checkbox from "../component/Checkbox.jsx";
 // img
 import basicProfile from "../assets/images/basicProfile.svg";
 import modify from "../assets/images/modifyImg.svg";
-import Input from "../component/Input.jsx";
-import Checkbox from "../component/Checkbox.jsx";
 import back from "../assets/images/back.svg";
 import check from "../assets/images/check.svg";
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const MyPageForm = () => {
     const navigate = useNavigate();
+    const token = localStorage.getItem('token');
 
     const [fetchedUserInfo, setFetchedUserInfo] = useState({
         password: '',
@@ -24,7 +25,7 @@ const MyPageForm = () => {
     const [profileImg, setProfileImg] = useState(basicProfile);
     const [userInfo, setUserInfo] = useState({ email: '', nickname: '', password: '', userPublicScope: false, image: '' });
     const [showPasswordFields, setShowPasswordFields] = useState(false);
-    const [checked, setChecked] = useState(false); // Set default to false
+    const [checked, setChecked] = useState(false);
 
     const onChangeProfileImg = (e) => {
         const file = e.target.files[0];
@@ -39,8 +40,6 @@ const MyPageForm = () => {
             reader.readAsDataURL(file);
         }
     };
-
-    const token = localStorage.getItem('token');
 
     useEffect(() => {
         fetchMyInfo();

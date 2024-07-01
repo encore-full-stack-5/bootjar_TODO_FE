@@ -1,13 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import "../styles/todo.css";
-// img
-import basicProfile from "../assets/images/basicProfile.svg";
-import deleteComment from "../assets/images/deleteComment.svg";
-import mdfComment from "../assets/images/mdfComment.svg";
-import Input from "../component/Input.jsx";
 import {categories} from "../config_f/categories.js";
 import axios from "axios";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
 
 const TodoForm = (props) => {
 
@@ -22,7 +16,6 @@ const TodoForm = (props) => {
         todoContent: ''
     });
     const token = localStorage.getItem('token');
-    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -68,9 +61,6 @@ const TodoForm = (props) => {
             }
         }
     };
-    // const handleCancel = () => {
-    //     navigate('/home'); // 취소 버튼 클릭 시 홈으로 이동
-    // };
 
     useEffect(() => {
         if (isEditMode) {

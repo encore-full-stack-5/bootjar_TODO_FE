@@ -1,24 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import "../styles/todo.css";
 import Checkbox from "../component/Checkbox.jsx";
+import axios from "axios";
+import {categories} from "../config_f/categories.js";
+import Date from "../component/Date.jsx";
+import TodoForm from "./TodoForm.jsx";
 // img
 import basicProfile from "../assets/images/basicProfile.svg";
 import deleteComment from "../assets/images/deleteComment.svg";
 import mdfComment from "../assets/images/mdfComment.svg";
 import close from "../assets/images/delete.svg";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import {categories} from "../config_f/categories.js";
-import Date from "../component/Date.jsx";
-import TodoForm from "./TodoForm.jsx";
 
 const Todo = (props) => {
-
     const { onClickTodoShowModal, onClickTodoDelete, todoId, disabled } = props;
 
     // token
     const getToken = `Bearer ${localStorage.token}`;
-    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
     const [todo, setTodo] = useState({
         categoryId: 0,
@@ -33,6 +30,7 @@ const Todo = (props) => {
     const handleEdit = () => {
         setShowTodoMdfModal(!showTodoMdfModal);
     };
+
     const handleDelete = async () => {
         try {
             const response = await axios.delete(`http://34.121.86.244/todos/${todoId}`, {
@@ -46,6 +44,7 @@ const Todo = (props) => {
             console.log(error);
         }
     };
+
     const onClickUpdateSave = () => {
         setShowTodoMdfModal(false);
         fetchData();
@@ -174,7 +173,7 @@ const Todo = (props) => {
     }, []);
 
     if (isLoading) {
-        return <div>로딩 중...</div>; // 또는 더 세련된 로딩 컴포넌트를 사용할 수 있습니다.
+        return <div>로딩 중...</div>;
     }
 
     return (

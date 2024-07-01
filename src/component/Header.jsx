@@ -13,6 +13,10 @@ const Header = () => {
         navigate('/login');
     };
 
+    const onClickGoHome = () => {
+        navigate('/home')
+    }
+
     const [searchValue, setSearchValue] = useState('');
     const [isOpen, setIsOpen] = useState(false);
 
@@ -24,13 +28,12 @@ const Header = () => {
 
     const handleChange = (event) => {
         setSearchValue(event.target.value);
-
     };
 
     return (
         <>
             <div className="headerContainer">
-                <div className="logo">
+                <div className="logo" onClick={onClickGoHome}>
                     <img src={logo} alt="YOU & I TODO" className="logoImg"/>
                     <div className="logoTxt">
                         <p>you & i</p>
@@ -38,7 +41,6 @@ const Header = () => {
                     </div>
                 </div>
                 <div className="headerOption">
-
                     <button onClick={() => setIsOpen(!isOpen)} className="friendRequest"><img src={friendRequest} alt={"친구요청"}/>
                         {
                             isOpen ? <RequestFriendList /> : <></>

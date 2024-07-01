@@ -58,11 +58,13 @@
 .searchContainer .searchWrap .searchList .list .nickname {
   font-family: "PretendardBold";
   font-size: min(max(28px, 1.75rem + (1vw - 16px) * 3.75), 40px);
+  text-align: center;
   margin-top: 10px;
 }
 .searchContainer .searchWrap .searchList .list .account {
   margin-top: 20px;
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 .searchContainer .searchWrap .searchList .list .account p {

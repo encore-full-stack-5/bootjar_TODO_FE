@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import '../styles/auth.css';
 import Input from "../component/Input.jsx";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 // img
 import back from "../assets/images/back.svg";
 import send from "../assets/images/send.svg";
 import check from "../assets/images/checkGreen.svg";
-import axios from "axios";
-import {useNavigate} from "react-router-dom";
 
 const FindPassword = () => {
     const navigate = useNavigate();
@@ -29,7 +29,7 @@ const FindPassword = () => {
         console.log(token);
         await axios.post("http://34.121.86.244/users/qrcode", {
             address: emailInpt,
-            changePasswordUrl: `http://localhost:5173/changePassword?query=${token}`
+            changePasswordUrl: `http://34.121.86.244/changePassword?query=${token}`
         });
         setIsSending(true);
     }

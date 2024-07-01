@@ -10,6 +10,7 @@
     right: min(2.083333333333333%, 40px); // 1920px / 40px
   }
   .logo {
+    cursor: pointer;
     @include flexCenter;
     .logoImg {
       width: 54px;
