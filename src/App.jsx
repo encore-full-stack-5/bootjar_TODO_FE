@@ -24,6 +24,7 @@ function App() {
           <Route path="/detail" element={<Todo />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/home" element={<Main />}></Route>
+          <Route path="/todo" element={<FriendMain />}></Route>
           <Route path="/mypage" element={<MyPage />}></Route>
           <Route path="/edit-profile" element={<MyPageForm />}></Route>
           <Route path="/todos/new" element={<TodoForm />}></Route>

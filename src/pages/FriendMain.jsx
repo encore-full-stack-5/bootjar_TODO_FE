@@ -84,7 +84,7 @@ const FriendMain = () => {
 
     const fetchUser = async () => {
         try {
-            const response = await axios.get(`http://34.121.86.244/todos/users/me`, {
+            const response = await axios.get(`http://34.121.86.244/users/me`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
