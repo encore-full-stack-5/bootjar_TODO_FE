@@ -35,6 +35,7 @@ const FriendMain = () => {
 
     useEffect(() => {
         const storedFriends = localStorage.getItem('friends');
+        console.log(localStorage.getItem('friends'));
         if (storedFriends) {
             setFriendsList(JSON.parse(storedFriends));
         }
@@ -47,9 +48,14 @@ const FriendMain = () => {
                 alert("요청을 보냈습니다!");
             }
         } catch (error) {
-            alert("이미 처리된 요청입니다!");
+            if (error.response.status === 500) {
+                alert("이미 처리된 요청입니다!");
+            } else {
+                alert(error);
+            }
         }
     };
+
 
     const handleDeleteClick = () => {
         navigate('/home');
