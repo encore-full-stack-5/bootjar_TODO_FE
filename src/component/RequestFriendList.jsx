@@ -11,7 +11,7 @@ const RequestFriendList = () => {
         try {
             const res = await getRequests();
             if (res.status === 200) {
-                setRequests(res.data); // Assuming the API response structure has the friend list in res.data
+                setRequests(res.data); 
             }
         } catch (error) {
             console.error("Error fetching friend list", error);
