@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import "../styles/main.css";
 import Header from "../component/Header.jsx";
 import Checkbox from "../component/Checkbox.jsx";
-import {Link, useLocation, useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Calendar from "../component/Calendar.jsx";
 import FriendList from "../component/FriendList.jsx";
 import axios from "axios";
@@ -13,10 +14,6 @@ import basicProfile from "../assets/images/basicProfile.svg";
 import comment from "../assets/images/comment.svg";
 import deleteFriend from "../assets/images/delete.svg";
 import bottom from "../assets/images/bottom.svg";
-// import move from "../assets/images/move.svg";
-// import done from "../assets/images/done.svg";
-// import notDone from "../assets/images/notDone.svg";
-// import commentCount from "../assets/images/commentCount.svg";
 
 const FriendMain = () => {
     const location = useLocation();
@@ -26,26 +23,36 @@ const FriendMain = () => {
     const userId = location.state?.userId;
     const userNickname = location.state?.userNickname;
     const userImage = location.state?.userImage;
+    const myNickname = localStorage.getItem('myNickname'); // Load myNickname from localStorage
 
-    const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear()+"-"+String(new Date().getMonth()+1).padStart(2, '0')+"-"+String(new Date().getDate()).padStart(2, '0'));
+    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
     const [todos, setTodos] = useState([]);
     const [userImg, setUserImg] = useState('');
+    const [friendsList, setFriendsList] = useState([]);
 
     const friend = new URLSearchParams(location.search).get("query") === "friend";
     const search = new URLSearchParams(location.search).get("query") === "search";
+
+    useEffect(() => {
+        const storedFriends = localStorage.getItem('friends');
+        if (storedFriends) {
+            setFriendsList(JSON.parse(storedFriends));
+        }
+    }, []);
 
     const sendRequest = async (receiverId) => {
         try {
             const res = await sendFriendRequest(receiverId);
             if (res.status === 200) {
-                alert("요청을 보냈습니다!")
+                alert("요청을 보냈습니다!");
             }
         } catch (error) {
-            alert("이미 처리된 요청입니다!")
+            alert("이미 처리된 요청입니다!");
         }
     };
+
     const handleDeleteClick = () => {
-        navigate('/home'); // Navigate to the /home route
+        navigate('/home');
     };
 
     const fetchFriendTodos = async () => {
@@ -63,7 +70,7 @@ const FriendMain = () => {
             alert(error.response.data.message);
             console.log(error);
         }
-    }
+    };
 
     const fetchUserTodos = async () => {
         try {
@@ -80,7 +87,7 @@ const FriendMain = () => {
             alert(error.response.data.message);
             console.log(error);
         }
-    }
+    };
 
     const fetchUser = async () => {
         try {
@@ -93,7 +100,7 @@ const FriendMain = () => {
         } catch (error) {
             alert(error.message);
         }
-    }
+    };
 
     const groupedTodos = todos.reduce((acc, todo) => {
         const category = categories[todo.categoryId] || '기타';
@@ -102,11 +109,16 @@ const FriendMain = () => {
         return acc;
     }, {});
 
+    // Function to check if a user is a friend or if the user's nickname matches myNickname
+    const isFriend = (userId, nickname) => {
+        return friendsList.some(friend => friend.userId === userId) || nickname === myNickname;
+    };
+
     useEffect(() => {
         fetchUser();
         if (friend) fetchFriendTodos();
         else if (search) fetchUserTodos();
-    }, [selectedDate, userId])
+    }, [selectedDate, userId]);
 
     return (
         <>
@@ -118,35 +130,6 @@ const FriendMain = () => {
                         <div className="calendar">
                             <Calendar setDate={setSelectedDate} />
                         </div>
-                        {/*<div className="monthRecord">*/}
-                        {/*    <div className="record">*/}
-                        {/*        <span className="icon">*/}
-                        {/*            <img src={done} alt={"완료"} />*/}
-                        {/*        </span>*/}
-                        {/*        <div className="recordText">*/}
-                        {/*            <p>완료</p>*/}
-                        {/*            <p className="count">0</p>*/}
-                        {/*        </div>*/}
-                        {/*    </div>*/}
-                        {/*    <div className="record">*/}
-                        {/*        <span className="icon">*/}
-                        {/*            <img src={notDone} alt={"미완료"} />*/}
-                        {/*        </span>*/}
-                        {/*        <div className="recordText">*/}
-                        {/*            <p>미완료</p>*/}
-                        {/*            <p className="count">1</p>*/}
-                        {/*        </div>*/}
-                        {/*    </div>*/}
-                        {/*    <div className="record">*/}
-                        {/*        <span className="icon commentIcon">*/}
-                        {/*            <img src={commentCount} alt={"댓글"} />*/}
-                        {/*        </span>*/}
-                        {/*        <div className="recordText">*/}
-                        {/*            <p>댓글</p>*/}
-                        {/*            <p className="count">3</p>*/}
-                        {/*        </div>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
                     </div>
                     <div className="todoContainer">
                         <div className="userProfile">
@@ -156,18 +139,18 @@ const FriendMain = () => {
                                     alt="프로필 사진"/>
                                 <p className="nickname">{userNickname}</p>
                                 <p>TODO</p>
-                                {search && (
+                                {search && !isFriend(userId, userNickname) && (
                                     <button className="request" onClick={() => sendRequest(userId)}>친구 요청</button>
                                 )}
                             </div>
                             <div className="delete">
-                                <button onClick={handleDeleteClick}><img src={deleteFriend} alt={""}/></button>
+                                <button onClick={handleDeleteClick}><img src={deleteFriend} alt=""/></button>
                             </div>
                         </div>
                         <div className="todoWrap friendTodo">
                             {Object.keys(groupedTodos).map(category => (
                                 <ul key={category} className="todoList">
-                                    <p className="category"><img src={bottom} alt={""} />{category}</p>
+                                    <p className="category"><img src={bottom} alt=""/>{category}</p>
                                     {groupedTodos[category].map(todo => (
                                         <li key={todo.todoId} className={`todo ${todo.todoDone ? 'done' : ''}`}>
                                             <Checkbox id={`todo-${todo.todoId}`} check={todo.todoDone} disabled={true} />
@@ -177,7 +160,6 @@ const FriendMain = () => {
                                                 </Link>
                                             </p>
                                             <img src={comment} alt="댓글" className="comment" />
-                                            {/*<button className="move"><img src={move} alt="이동" /></button>*/}
                                         </li>
                                     ))}
                                 </ul>
@@ -199,7 +181,7 @@ const FriendMain = () => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
 export default FriendMain;

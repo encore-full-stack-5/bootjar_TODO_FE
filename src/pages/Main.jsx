@@ -51,6 +51,7 @@ const Main = () => {
 
             const { nickname ,image} = response.data;
             setNickname(nickname);
+            localStorage.setItem('myNickname',nickname);
             setImage(image)
         } catch (error) {
             alert(error.message);

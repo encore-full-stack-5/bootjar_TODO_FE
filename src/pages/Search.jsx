@@ -14,6 +14,15 @@ const Search = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [users, setUsers] = useState([]);
     const [searchError, setSearchError] = useState(false);
+    const [friendsList, setFriendsList] = useState([]);
+
+    // Load friends list from localStorage on component mount
+    useEffect(() => {
+        const storedFriends = localStorage.getItem('friends');
+        if (storedFriends) {
+            setFriendsList(JSON.parse(storedFriends));
+        }
+    }, []);
 
     useEffect(() => {
         const query = new URLSearchParams(location.search);
@@ -37,6 +46,11 @@ const Search = () => {
         } catch (error) {
             console.error("Error fetching friend list", error);
         }
+    };
+
+    // Function to check if a user is a friend
+    const isFriend = (userId) => {
+        return friendsList.some(friend => friend.userId === userId);
     };
 
     return (
@@ -65,6 +79,9 @@ const Search = () => {
                                                     <img src={nondisclosure} alt="비공개"/>
                                                 )}
                                             </div>
+                                            {isFriend(user.userId) ? (
+                                                <button className="hideButton">친구 요청</button>
+                                            ) : null}
                                         </Link>
                                     </li>
                                 ))}
