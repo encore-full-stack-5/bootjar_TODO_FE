@@ -165,6 +165,18 @@ const Todo = (props) => {
     const onChangeMdfCommentInpt = (e) => {
         setMdfCommentInpt(e.target.value);
     }
+    const updateDone = async (todoId) => {
+        try {
+            const response = await axios.put(`http://34.121.86.244/todos/${todoId}/check`,
+                {},{
+                    headers: {
+                        Authorization: getToken
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     useEffect( () => {
         fetchData();
@@ -195,7 +207,7 @@ const Todo = (props) => {
                     </div>
                     <div className="modalBody">
                         <div className="todo">
-                            <Checkbox id={`1`} check={todo.todoDone} disabled={!disabled}/>
+                            <Checkbox id={`1`} check={todo.todoDone} disabled={!disabled} clickHandler={()=>updateDone(todoId)} />
                             <p className="todoTitle">{todo.todoTitle}</p>
                             <p className="date">{todo.todoDate}</p>
                         </div>
