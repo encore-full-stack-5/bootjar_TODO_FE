@@ -70,6 +70,7 @@ textarea:read-only {
 }
 
 textarea {
+  font-family: "PretendardReqular";
   border-radius: 20px;
   border: 1px solid #DDDDDD;
   padding: 20px;
