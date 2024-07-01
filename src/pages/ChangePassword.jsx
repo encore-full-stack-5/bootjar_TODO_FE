@@ -25,7 +25,7 @@ const ChangePassword = () => {
             console.log(response);
             setUpdateSuccess(true);
         } catch (error) {
-            console.log(error.response.data.password);
+            alert(error.response.data.password || (error.response.data && "잘못된 URL 입니다.") || "존재하지 않은 유저입니다.\n회원가입 후 이용해 주세요.");
         }
     }
 
