@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
 import '../styles/auth.css';
 import Input from "../component/Input.jsx";
+import axios from "axios";
 // img
 import check from "../assets/images/check.svg";
-import axios from "axios";
 
 const ChangePassword = () => {
+    const token = new URLSearchParams(location.search).get("query");
+
     const [passwordInpt, setPasswordInpt] = useState();
     const [passwordConfirmInpt, setPasswordConfirmInpt] = useState();
     const [updateSuccess, setUpdateSuccess] = useState(false);
-
-    const token = new URLSearchParams(location.search).get("query");
 
     const onClickUpdatePassword = async () => {
         if(passwordInpt !== passwordConfirmInpt) {

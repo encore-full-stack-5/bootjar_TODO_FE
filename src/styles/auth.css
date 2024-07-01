@@ -45,6 +45,7 @@
   width: 300px;
 }
 .authContainer .loginForm input {
+  width: 100%;
   margin-bottom: 10px;
 }
 .authContainer .loginForm .signInUp {

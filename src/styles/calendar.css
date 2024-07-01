@@ -67,7 +67,7 @@
 .calendar .calendarDays .day .current.today::after {
   content: "";
   width: 80%;
-  height: 80%;
+  height: 85.5%;
   display: block;
   background-color: #F470A4;
   border-radius: 50%;

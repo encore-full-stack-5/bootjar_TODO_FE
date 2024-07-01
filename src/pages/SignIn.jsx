@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
 import '../styles/auth.css'
-//img
-import logo from '../assets/images/logo.svg'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+//img
+import logo from '../assets/images/logo.svg'
 
 function SignIn(){
     const navigate = useNavigate();
 
     const handlSignupClick = () => {
         navigate('/signup');
-      };
+    };
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
-      };
+    };
     
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
-      };
+    };
 
 
     const handleSubmit = async (e) => {
@@ -56,22 +56,24 @@ function SignIn(){
                     </div>
                 </div>
                 <div className="loginForm">
-                    <input type="text" placeholder="이메일" value={email} onChange={handleEmailChange}/>
-                    <input type="password" placeholder="비밀번호" value={password} onChange={handlePasswordChange}/>
-                    <div className="signInUp">
-                        <div className="signUp">
-                            <p>아직 회원이 아니신가요?</p>
-                            <button onClick={handlSignupClick}>회원가입</button>
+                    <form>
+                        <input type="text" placeholder="이메일" value={email} onChange={handleEmailChange}/>
+                        <input type="password" placeholder="비밀번호" value={password} onChange={handlePasswordChange}/>
+                        <div className="signInUp">
+                            <div className="signUp">
+                                <p>아직 회원이 아니신가요?</p>
+                                <button type="button" onClick={handlSignupClick}>회원가입</button>
+                            </div>
+                            <button type="submit" className="signIn" onClick={handleSubmit}>LOGIN</button>
                         </div>
-                        <button className="signIn" onClick={handleSubmit}>LOGIN</button>
-                    </div>
-                    <div className="findPasswordBtn">
-                        <button onClick={() => navigate('/findPassword')}>비밀번호 찾기</button>
-                    </div>
+                        <div className="findPasswordBtn">
+                            <button type="button" onClick={() => navigate('/findPassword')}>비밀번호 찾기</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </>
     );
-};
+}
 
 export default SignIn;

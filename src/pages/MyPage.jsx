@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import "../styles/myPage.css";
 import Header from "../component/Header.jsx";
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 // img
 import basicProfile from "../assets/images/basicProfile.svg";
 import nondisclosure from "../assets/images/nondisclosure.svg";
 import Public from "../assets/images/public.svg";
 import back from "../assets/images/back.svg";
 import modify from "../assets/images/modify.svg";
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const MyPage = () => {
     const navigate = useNavigate();
+    const token = localStorage.getItem('token');
+
     const [userInfo, setUserInfo] = useState({
         email: '',
         nickname: '',
         userPublicScope: true,
         image: basicProfile,
     });
-
-    const token = localStorage.getItem('token');
 
     useEffect(() => {
         fetchMyInfo();
@@ -77,4 +77,3 @@ const MyPage = () => {
 };
 
 export default MyPage;
-

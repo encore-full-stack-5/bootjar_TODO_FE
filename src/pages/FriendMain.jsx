@@ -3,33 +3,36 @@ import "../styles/main.css";
 import Header from "../component/Header.jsx";
 import Checkbox from "../component/Checkbox.jsx";
 import {Link, useLocation, useNavigate} from 'react-router-dom';
-// img
-import basicProfile from "../assets/images/basicProfile.svg";
-import comment from "../assets/images/comment.svg";
-import move from "../assets/images/move.svg";
-import deleteFriend from "../assets/images/delete.svg";
-import bottom from "../assets/images/bottom.svg";
-import done from "../assets/images/done.svg";
-import notDone from "../assets/images/notDone.svg";
-import commentCount from "../assets/images/commentCount.svg";
 import Calendar from "../component/Calendar.jsx";
 import FriendList from "../component/FriendList.jsx";
 import axios from "axios";
 import { sendFriendRequest } from "../api_f/friend.js";
 import { categories } from "../config_f/categories.js";
+// img
+import basicProfile from "../assets/images/basicProfile.svg";
+import comment from "../assets/images/comment.svg";
+import deleteFriend from "../assets/images/delete.svg";
+import bottom from "../assets/images/bottom.svg";
+// import move from "../assets/images/move.svg";
+// import done from "../assets/images/done.svg";
+// import notDone from "../assets/images/notDone.svg";
+// import commentCount from "../assets/images/commentCount.svg";
 
 const FriendMain = () => {
     const location = useLocation();
     const navigate = useNavigate();
+
+    const token = localStorage.getItem('token');
     const userId = location.state?.userId;
     const userNickname = location.state?.userNickname;
     const userImage = location.state?.userImage;
-    const friend = new URLSearchParams(location.search).get("query") === "friend";
-    const search = new URLSearchParams(location.search).get("query") === "search";
-    const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear() + "-" + String(new Date().getMonth() + 1).padStart(2, '0') + "-" + new Date().getDate());
+
+    const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear()+"-"+String(new Date().getMonth()+1).padStart(2, '0')+"-"+String(new Date().getDate()).padStart(2, '0'));
     const [todos, setTodos] = useState([]);
     const [userImg, setUserImg] = useState('');
-    const token = localStorage.getItem('token');
+
+    const friend = new URLSearchParams(location.search).get("query") === "friend";
+    const search = new URLSearchParams(location.search).get("query") === "search";
 
     const sendRequest = async (receiverId) => {
         try {
@@ -61,6 +64,7 @@ const FriendMain = () => {
             console.log(error);
         }
     }
+
     const fetchUserTodos = async () => {
         try {
             const response = await axios.get(`http://34.121.86.244/todos/users/${userId}?query=${selectedDate}`, {
@@ -77,6 +81,7 @@ const FriendMain = () => {
             console.log(error);
         }
     }
+
     const fetchUser = async () => {
         try {
             const response = await axios.get(`http://34.121.86.244/todos/users/me`, {
@@ -89,6 +94,7 @@ const FriendMain = () => {
             alert(error.message);
         }
     }
+
     const groupedTodos = todos.reduce((acc, todo) => {
         const category = categories[todo.categoryId] || '기타';
         if (!acc[category]) acc[category] = [];

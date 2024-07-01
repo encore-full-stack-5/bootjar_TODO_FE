@@ -16,6 +16,7 @@
   padding-right: min(2.0833333333%, 40px);
 }
 .headerContainer .logo {
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;

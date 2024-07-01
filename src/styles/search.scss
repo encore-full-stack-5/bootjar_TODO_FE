@@ -50,11 +50,12 @@
             family: $bold;
             size: $title;
           }
+          text-align: center;
           margin-top: 10px;
         }
         .account {
           margin-top: 20px;
-          @include flexAlignCenter;
+          @include flexCenter;
           p {
             margin-right: 10px;
           }

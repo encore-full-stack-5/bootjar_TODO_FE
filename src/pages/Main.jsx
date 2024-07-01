@@ -2,35 +2,33 @@ import React, {useEffect, useState} from 'react';
 import "../styles/main.css";
 import Header from "../component/Header.jsx";
 import Checkbox from "../component/Checkbox.jsx";
-// img
-import basicProfile from "../assets/images/basicProfile.svg";
-import notification from "../assets/images/notification.svg";
-import comment from "../assets/images/comment.svg";
-import move from "../assets/images/move.svg";
-import setting from "../assets/images/setting.svg";
-import bottom from "../assets/images/bottom.svg";
-import done from "../assets/images/done.svg";
-import notDone from "../assets/images/notDone.svg";
-import commentCount from "../assets/images/commentCount.svg";
 import Calendar from "../component/Calendar.jsx";
 import FriendList from "../component/FriendList.jsx";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-import {Link} from "react-router-dom";
-import {categories} from "../config_f/categories.js";
+import { categories } from "../config_f/categories.js";
 import Todo from "./Todo.jsx";
-import todo from "./Todo.jsx";
 import TodoForm from "./TodoForm.jsx";
+// img
+import basicProfile from "../assets/images/basicProfile.svg";
+import comment from "../assets/images/comment.svg";
+import setting from "../assets/images/setting.svg";
+import bottom from "../assets/images/bottom.svg";
+// import move from "../assets/images/move.svg";
+// import done from "../assets/images/done.svg";
+// import notDone from "../assets/images/notDone.svg";
+// import commentCount from "../assets/images/commentCount.svg";
 
 
 const Main = () => {
     const navigate = useNavigate();
+    const token = localStorage.getItem('token');
 
-    const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear()+"-"+String(new Date().getMonth()+1).padStart(2, '0')+"-"+new Date().getDate());
-    const [todos, setTodos] = useState([]);
+    const [selectedDate, setSelectedDate] = useState(new Date().getUTCFullYear()+"-"+String(new Date().getMonth()+1).padStart(2, '0')+"-"+String(new Date().getDate()).padStart(2, '0'));
     const [nickname, setNickname] = useState('');
     const [image, setImage] = useState('');
     // todo
+    const [todos, setTodos] = useState([]);
     const [showTodoModal, setShowTodoModal] = useState(false);
     const [showTodoNewModal, setShowTodoNewModal] = useState(false);
     const [todoId, setTodoId] = useState('');
@@ -39,15 +37,9 @@ const Main = () => {
         navigate('/mypage');
      };
 
-    // const handleAddTODO = () => {
-    //     navigate('/todos/new')
-    // }
-
      useEffect(() => {
         fetchMyInfo();
     }, []);
-
-    const token = localStorage.getItem('token');
 
     const fetchMyInfo = async () => {
         try {
@@ -65,7 +57,6 @@ const Main = () => {
             console.log(error);
         }
     };
-
 
     const fetchTodos = async () => {
         try {
@@ -90,7 +81,6 @@ const Main = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            // alert(response.data.message)
         } catch (error) {
             console.log(error);
         }
@@ -124,6 +114,7 @@ const Main = () => {
     useEffect(() => {
         fetchTodos();
     }, [selectedDate])
+
     return (
         <>
             <div className="mainContainer">
@@ -184,9 +175,7 @@ const Main = () => {
                                         <li key={todo.todoId} className={`todo ${todo.todoDone ? 'done' : ''}`}>
                                             <Checkbox id={`todo-${todo.todoId}`} check={todo.todoDone} clickHandler={()=>updateDone(todo.todoId)} />
                                             <p onClick={() => onClickTodoShowModal(todo.todoId)}>
-                                                {/*<Link to='/detail' state={{todoId: todo.todoId, disabled: true}}>*/}
-                                                    {todo.todoTitle}
-                                                {/*</Link>*/}
+                                                {todo.todoTitle}
                                             </p>
                                             <img src={comment} alt="댓글" className="comment" />
                                             {/*<button className="move"><img src={move} alt="이동" /></button>*/}
