@@ -22,6 +22,7 @@
   margin: 0 auto;
 }
 .myPageContainer .myPageWrap .profileImg {
+  height: 200px;
   width: 200px;
   margin-top: 50px;
   border-radius: 70px;
@@ -95,6 +96,7 @@
   position: relative;
 }
 .myPageContainer .myPageFormWrap .formContainer .profileImgForm > img {
+  height: 200px;
   width: 200px;
   border: 1px solid #E9EAEE;
   border-radius: 70px;
