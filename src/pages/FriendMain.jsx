@@ -14,6 +14,7 @@ import basicProfile from "../assets/images/basicProfile.svg";
 import comment from "../assets/images/comment.svg";
 import deleteFriend from "../assets/images/delete.svg";
 import bottom from "../assets/images/bottom.svg";
+import Todo from "./Todo.jsx";
 
 const FriendMain = () => {
     const location = useLocation();
@@ -126,6 +127,17 @@ const FriendMain = () => {
         else if (search) fetchUserTodos();
     }, [selectedDate, userId]);
 
+    const [showTodoModal, setShowTodoModal] = useState(false);
+    const [todoId, setTodoId] = useState('');
+
+    const onClickTodoShowModal = (todoId) => {
+        setShowTodoModal(!showTodoModal);
+        setTodoId(todoId);
+    }
+    const onClickTodoDelete = () => {
+        setShowTodoModal(false);
+    }
+
     return (
         <>
             <div className="mainContainer">
@@ -159,13 +171,16 @@ const FriendMain = () => {
                                     <p className="category"><img src={bottom} alt=""/>{category}</p>
                                     {groupedTodos[category].map(todo => (
                                         <li key={todo.todoId} className={`todo ${todo.todoDone ? 'done' : ''}`}>
-                                            <Checkbox id={`todo-${todo.todoId}`} check={todo.todoDone} disabled={true} />
-                                            <p>
-                                                <Link to='/detail' state={{ todoId: todo.todoId, disabled: false }}>
-                                                    {todo.todoTitle}
-                                                </Link>
+                                            <Checkbox id={`todo-${todo.todoId}`} check={todo.todoDone} disabled={true}/>
+                                            {/*<p>*/}
+                                            {/*    <Link to='/detail' state={{ todoId: todo.todoId, disabled: false }}>*/}
+                                            {/*        {todo.todoTitle}*/}
+                                            {/*    </Link>*/}
+                                            {/*</p>*/}
+                                            <p onClick={() => onClickTodoShowModal(todo.todoId)}>
+                                                {todo.todoTitle}
                                             </p>
-                                            <img src={comment} alt="댓글" className="comment" />
+                                            <img src={comment} alt="댓글" className="comment"/>
                                         </li>
                                     ))}
                                 </ul>
@@ -185,6 +200,8 @@ const FriendMain = () => {
                         </div>
                     </div>
                 </div>
+                { showTodoModal && <Todo onClickTodoShowModal={onClickTodoShowModal} onClickTodoDelete={onClickTodoDelete} todoId={todoId} disabled={true} /> }
+
             </div>
         </>
     );
