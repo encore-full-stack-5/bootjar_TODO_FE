@@ -22,7 +22,7 @@ function App() {
           <Route path="/search" element={<Search />}></Route>
           <Route path="/detail" element={<Todo />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
-          <Route path="/login" element={<SignIn />}></Route>
+          <Route path="/" element={<SignIn />}></Route>
           <Route path="/home" element={<Main />}></Route>
           <Route path="/mypage" element={<MyPage />}></Route>
           <Route path="/edit-profile" element={<MyPageForm />}></Route>
